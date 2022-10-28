@@ -55,5 +55,5 @@ public class Vehicle {
     private float width;
 
     @ManyToMany(mappedBy = "vehicles")
-    private List<AppUser> roads;
+    private List<AppUser> users;
 }
