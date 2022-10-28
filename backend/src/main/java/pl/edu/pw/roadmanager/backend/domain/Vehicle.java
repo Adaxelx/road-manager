@@ -1,2 +1,4 @@
-package pl.edu.pw.roadmanager.backend.domain;public class Vehicle {
+package pl.edu.pw.roadmanager.backend.domain;
+
+public class Vehicle {
 }
