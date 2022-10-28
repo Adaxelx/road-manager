@@ -33,4 +33,8 @@ public class RoadSegment {
 
     @ManyToMany(mappedBy = "segments")
     private List<Road> roads;
+
+    @ManyToOne
+    @JoinColumn(name = "toll_id")
+    private Toll toll;
 }

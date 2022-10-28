@@ -28,7 +28,4 @@ public class Junction {
 
     @Column(nullable = false)
     private float longitude;
-
-    @OneToMany(mappedBy = "road_segment", cascade = CascadeType.REMOVE)
-    protected List<RoadSegment> segments;
 }

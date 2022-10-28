@@ -31,8 +31,8 @@ public class Road {
     @ManyToMany
     @JoinTable(
             name = "road_road_segment_relation",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
+            joinColumns = @JoinColumn(name = "road_id"),
+            inverseJoinColumns = @JoinColumn(name = "road_segment_id")
     )
     private List<RoadSegment> segments;
 }

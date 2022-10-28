@@ -1,0 +1,22 @@
+2022-10-28 20:45:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table [*]user (\000d\000a       id bigint not null,\000d\000a        email varchar(255),\000d\000a        first_name varchar(255),\000d\000a        last_name varchar(255),\000d\000a        phone_number varchar(255),\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table user (
+       id bigint not null,
+        email varchar(255),
+        first_name varchar(255),
+        last_name varchar(255),
+        phone_number varchar(255),
+        primary key (id)
+    ) [42001-214]
+2022-10-28 20:48:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table [*]user (\000d\000a       id bigint not null,\000d\000a        email varchar(255),\000d\000a        first_name varchar(255),\000d\000a        last_name varchar(255),\000d\000a        phone_number varchar(255),\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table user (
+       id bigint not null,
+        email varchar(255),
+        first_name varchar(255),
+        last_name varchar(255),
+        phone_number varchar(255),
+        primary key (id)
+    ) [42001-214]
