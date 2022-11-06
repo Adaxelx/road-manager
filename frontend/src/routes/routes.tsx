@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { Layout } from "../shared/Layout/Layout";
-import { RoadNetwork } from "../features/RoadNetwork/routes/RoadNetwork";
 import { Drive } from "../features/Drive/routes/Drive";
+import { RoadNetworkPresenter } from "../features/RoadNetwork/routes/RoadNetworkPresenter";
 
 const App = () => {
     return (
@@ -16,7 +16,7 @@ export const routes = [
         path: "/app",
         element: <App />,
         children: [
-            { path: "road-network", element: <RoadNetwork /> },
+            { path: "road-network", element: <RoadNetworkPresenter /> },
             { path: "drive", element: <Drive /> },
             { path: "*", element: <Navigate to="." /> },
         ],
