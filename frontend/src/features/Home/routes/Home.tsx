@@ -1,10 +1,11 @@
 import { Grid } from "@mui/material"
 import { Stack } from "@mui/system"
 import { HomeButton } from "../components/HomeButton/HomeButton"
+import styles from "./styles.module.scss"
 
 export const Home = () => {
     return (
-        <Stack spacing={1} alignItems="center" gap={4}>
+        <Stack className={styles.home} spacing={1} alignItems="center" gap={4}>
             <img src="/logo.svg" width={64} />            
 
             <Grid
