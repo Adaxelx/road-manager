@@ -25,6 +25,7 @@ public class Road {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private RoadType type;
 
