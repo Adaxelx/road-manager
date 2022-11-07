@@ -1,13 +1,12 @@
 package pl.edu.pw.roadmanager.backend.domain;
 
-import javax.persistence.*;
-
-import java.util.Date;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,14 +20,8 @@ public class Vehicle {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "cilinder_capacity", updatable = true)
-    private float cilinderCapacity;
-
-    @Column(name = "height", updatable = true)
-    private float height;
-
-    @Column(name = "length", updatable = true)
-    private float length;
+    @Column(name = "cylinder_capacity", updatable = true)
+    private float cylinderCapacity;
 
     @Column(name = "manufacturer", updatable = true)
     private String manufacturer;
@@ -39,8 +32,8 @@ public class Vehicle {
     @Column(name = "production_year", updatable = true)
     private Date productionYear;
 
-    @Column(name = "registartion_number", updatable = true)
-    private String registartionNumber;
+    @Column(name = "registration_number", updatable = true)
+    private String registrationNumber;
 
     @Column(name = "technical_id", updatable = true)
     private long technicalID;
@@ -50,9 +43,6 @@ public class Vehicle {
 
     @Column(name = "weight", updatable = true)
     private float weight;
-
-    @Column(name = "width", updatable = true)
-    private float width;
 
     @ManyToMany(mappedBy = "vehicles")
     private List<AppUser> users;
