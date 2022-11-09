@@ -1,0 +1,150 @@
+openapi: 3.0.3
+info:
+  title: Road Manager - OpenAPI 3.0
+  description: |-
+    Road Manager API
+  version: 1.0.11
+externalDocs:
+  description: Wiki
+  url: https://github.com/Adaxelx/road-manager/wiki
+servers:
+  - url: https://someserver.swagger.io/api/v3
+tags:
+  - name: RoadNetwork
+    description: IRoadNetworkAPI
+  - name: Drive
+    description: IDriveAPI
+paths:
+  /roadNetwork:
+    get:
+      tags:
+        - RoadNetwork
+      summary: Get all roads
+      operationId: getRoadNetwork
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/RoadNetworkDTO'
+    post:
+      tags:
+        - RoadNetwork
+      summary: Add or update road by id
+      operationId: addOrEditRoad
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoadDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+  /drive:
+    post:
+      tags:
+        - Drive
+      summary: Register vehicle
+      operationId: registerVehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+components:
+  schemas:
+    RoadNetworkDTO:
+      type: object
+      properties:
+        RoadDTOS:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoadDTO'
+    RoadDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "ABCD"
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: "Autostrada A4"
+        type:
+          type: string
+          description: pet status in the store
+          enum:
+            - HIGHWAY
+            - NATIONAL_ROAD
+            - VOIVODESHIP_ROAD
+          example: "HIGHWAY"
+        segments: 
+          type: array
+          items:
+              $ref: '#/components/schemas/RoadSegmentDTO'
+    RoadSegmentDTO:
+      type: object
+      properties:
+        end:
+          $ref: '#/components/schemas/JunctionDTO'
+        id:
+          type: integer
+          example: 10
+        length:
+          type: number
+          example: 12313.32
+        start:
+          $ref: '#/components/schemas/JunctionDTO'
+    JunctionDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        latitude:
+          type: number
+          example: 51.9410
+        longitude:
+          type: number
+          example: 19.0945
+        name:
+          type: string
+          example: "Junction X"
+    VehicleDTO:
+      type: object
+      properties:
+        cylinderCapacity:
+          type: number
+          example: 23.234213
+        id:
+          type: integer
+          example: 1
+        manufacturer:
+          type: string
+          example: "ABCD"
+        model:
+          type: string
+          example: "ABCD"
+        productionYear:
+          type: string
+          example: "ABCD"
+        registrationNumber:
+          type: string
+          example: "ABCD"
+        technicalID:
+          type: integer
+          example: 1
+        type:
+          type: string
+          example: "type"
+        weight:
+          type: number
+          example: 1.2323
