@@ -3,13 +3,13 @@ import "leaflet/dist/leaflet.css";
 import "./RoadNetworkView.scss";
 
 import { MapContainer, TileLayer } from "react-leaflet";
-import { LatLngExpression } from "leaflet";
+import { LatLng, LatLngExpression } from "leaflet";
 import { RoadDto } from "../../../../api/model/roadDto";
-import { RoadSegmentDto } from "../../../../api/model/roadSegmentDto";
 import { JunctionDto } from "../../../../api/model/junctionDto";
 import { MapMarker } from "../MapMarker/MapMarker";
 import Button from "@mui/material/Button";
 import { RoadJunctionsTable } from "./RoadJunctionsTable";
+import { RoadList } from "./RoadList";
 
 interface MapConfig {
     mapCenter: LatLngExpression;
@@ -30,36 +30,67 @@ type RoadNetworkViewProps = {
 };
 
 export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
-    const [addRoadFlag, setAddRoadFlag] = React.useState(false);
-    const [roads2, setRoads2] = React.useState(roads);
-
-    const road = {
-        name: "Autostrada 2",
-        segments: [
+    const [road, setRoad] = React.useState<RoadDto | undefined>();
+    const [junctions, setJunctions] = React.useState<JunctionDto[]>([]);
+    const handleAddRoadClick = () => {
+        setRoad({});
+        setJunctions([
             {
-                startNode: {
-                    name: "junction 1234",
-                    latitude: 52.941,
-                    longitude: 19.3945,
-                },
-                endNode: {
-                    name: "junction 1235",
-                    latitude: 52.931,
-                    longitude: 19.4945,
-                },
+                latitude: 51.941,
+                longitude: 19.0945,
             },
-        ],
+            {
+                latitude: 52.941,
+                longitude: 16.0945,
+            },
+        ]);
     };
 
-    function handleAddRoadClick() {
-        if(addRoadFlag){
-            setAddRoadFlag(false)
-            roads2.pop()
-        } else {
-            setAddRoadFlag(true)
-            roads2.push(road)
+    const handleSaveRoadClick = () => {};
+
+    const handleEditRoad = (id: number) => {
+        const road: RoadDto | undefined = roads.find(
+            (road: RoadDto) => road.id === id
+        );
+        setRoad(road);
+
+        const newJunctions: JunctionDto[] =
+            road?.segments?.map((element) => element.startNode) || [];
+        const j: JunctionDto | undefined = road?.segments?.at(-1)?.endNode;
+        if (j) {
+            newJunctions?.push(j);
         }
-    }
+        setJunctions(newJunctions || []);
+    };
+
+    const handleAddJunction = () => {
+        setJunctions([
+            ...junctions,
+            {
+                latitude: 51.941,
+                longitude: 19.0945,
+            },
+        ]);
+    };
+
+    const handleChangeJunctionPosition = (
+        junctionIdx: number,
+        latLng: LatLng
+    ) => {
+        setJunctions((junctions: JunctionDto[]) =>
+            junctions.map((junction, idx) => {
+                if (junctionIdx === idx) {
+                    junction.latitude = latLng.lat;
+                    junction.longitude = latLng.lng;
+                }
+                return junction;
+            })
+        );
+    };
+
+    const handleDeleteJunction = (junctionIdx: number) => {
+        setJunctions(junctions.filter((junction, idx) => junctionIdx !== idx));
+    };
 
     return (
         <>
@@ -68,28 +99,45 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
                     attribution={mapConfig.attribution}
                     url={mapConfig.url}
                 />
-                {roads.map((road: RoadDto) =>
-                    road.segments?.map((segment: RoadSegmentDto) =>
-                        [segment.startNode, segment.endNode].map(
-                            (junction: JunctionDto, idx: number) => (
-                                <MapMarker
-                                    key={idx}
-                                    road={road}
-                                    junction={junction}
-                                ></MapMarker>
-                            )
-                        )
-                    )
-                )}
+                {junctions.map((junction: JunctionDto, idx: number) => (
+                    <MapMarker
+                        key={idx}
+                        junctionIdx={idx}
+                        road={road}
+                        junction={junction}
+                        handleChangeJunctionPosition={
+                            handleChangeJunctionPosition
+                        }
+                    ></MapMarker>
+                ))}
             </MapContainer>
-            {addRoadFlag ? <RoadJunctionsTable road={road}/> : null}
+            <RoadJunctionsTable
+                junctions={junctions}
+                road={road}
+                handleDeleteJunction={handleDeleteJunction}
+            />
             <Button
                 variant="contained"
                 sx={{ mt: 2 }}
                 onClick={handleAddRoadClick}
             >
-                {addRoadFlag ? "Zapisz drogę" : "Dodaj drogę"}
+                Dodaj drogę
             </Button>
+            <Button
+                variant="contained"
+                sx={{ mt: 2 }}
+                onClick={handleSaveRoadClick}
+            >
+                Zapisz drogę
+            </Button>
+            <Button
+                variant="contained"
+                sx={{ mt: 2 }}
+                onClick={handleAddJunction}
+            >
+                Dodaj skrzyżowanie
+            </Button>
+            <RoadList roads={roads} handleEditRoad={handleEditRoad} />
         </>
     );
 };

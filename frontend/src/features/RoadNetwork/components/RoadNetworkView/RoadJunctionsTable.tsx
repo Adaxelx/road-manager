@@ -11,78 +11,68 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { RoadDto } from "../../../../api/model/roadDto";
 import { JunctionDto } from "../../../../api/model/junctionDto";
 
-// function createData(name: string, x: number, y: number) {
-//     return { name, x, y };
-// }
-
-// const rows = [
-//     createData("Junction 1", 44.444, 66.231),
-//     createData("Junction 2", 44.443, 46.231),
-//     createData("Junction 3", 44.441, 56.231),
-// ];
-
 type RoadNetworkViewProps = {
-    road: RoadDto;
+    road: RoadDto | undefined;
+    junctions: JunctionDto[];
+    handleDeleteJunction: (idx: number) => void;
 };
 
-export const RoadJunctionsTable = ({ road }: RoadNetworkViewProps) => {
-    const rows = road.segments?.map((element) => element.startNode);
-    const j: JunctionDto | undefined = road.segments?.at(-1)?.endNode;
-    if (j !== undefined) {
-        rows?.push(j);
-    }
-    console.log(rows);
-    return (
-        <TableContainer component={Paper}>
-            <Table
-                sx={{ minWidth: 650 }}
-                size="small"
-                aria-label="a dense table"
-            >
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Name of junction</TableCell>
-                        <TableCell align="right">Coordinate X</TableCell>
-                        <TableCell align="right">Coordinate Y</TableCell>
-                        <TableCell align="right">Delete junction</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows !== undefined ? (
-                        rows.map((row) => (
+export const RoadJunctionsTable = ({
+    junctions,
+    road,
+    handleDeleteJunction,
+}: RoadNetworkViewProps) => {
+    return junctions.length ? (
+        <>
+            <div>{road?.name}</div>
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{ minWidth: 650 }}
+                    size="small"
+                    aria-label="a dense table"
+                >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">Coordinate X</TableCell>
+                            <TableCell align="center">Coordinate Y</TableCell>
+                            <TableCell align="right"></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {junctions.map((j: JunctionDto, idx: number) => (
                             <TableRow
-                                key={row.name}
+                                key={idx}
                                 sx={{
                                     "&:last-child td, &:last-child th": {
                                         border: 0,
                                     },
                                 }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {row.name}
+                                <TableCell align="center">
+                                    {j.latitude.toFixed(3)}
                                 </TableCell>
-                                <TableCell align="right">
-                                    {row.latitude}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {row.longitude}
+                                <TableCell align="center">
+                                    {j.longitude.toFixed(3)}
                                 </TableCell>
                                 <TableCell align="right">
                                     <IconButton
                                         aria-label="delete"
                                         size="small"
                                         color="error"
+                                        onClick={() =>
+                                            handleDeleteJunction(idx)
+                                        }
                                     >
                                         <DeleteIcon fontSize="inherit" />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
-                        ))
-                    ) : (
-                        <div>brak zaznaczonych punktów</div>
-                    )}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
+    ) : (
+        <div>No road selected!</div>
     );
 };
