@@ -1,15 +1,14 @@
-import * as React from "react";
-import "leaflet/dist/leaflet.css";
 import "./RoadNetworkView.scss";
-
-import { MapContainer, TileLayer } from "react-leaflet";
-import { LatLng, LatLngExpression } from "leaflet";
-import { RoadDto } from "../../../../api/model/roadDto";
-import { JunctionDto } from "../../../../api/model/junctionDto";
-import { MapMarker } from "../MapMarker/MapMarker";
+import "leaflet/dist/leaflet.css";
 import Button from "@mui/material/Button";
-import { RoadJunctionsTable } from "./RoadJunctionsTable";
-import { RoadList } from "./RoadList";
+import { LatLng, LatLngExpression } from "leaflet";
+import React from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
+
+import { JunctionDTO, RoadDTO, RoadSegmentDTO } from "@src/api";
+import { MapMarker } from "@features/RoadNetwork/components/MapMarker/MapMarker";
+import { RoadJunctionsTable } from "@features/RoadNetwork/components/RoadNetworkView/RoadJunctionsTable";
+import { RoadList } from "@features/RoadNetwork/components/RoadNetworkView/RoadList";
 
 interface MapConfig {
     mapCenter: LatLngExpression;
@@ -25,13 +24,13 @@ const mapConfig: MapConfig = {
     zoom: 6,
 };
 
-type RoadNetworkViewProps = {
-    roads: RoadDto[];
-};
+interface RoadNetworkViewProps {
+    roads: RoadDTO[];
+}
 
 export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
-    const [road, setRoad] = React.useState<RoadDto | undefined>();
-    const [junctions, setJunctions] = React.useState<JunctionDto[]>([]);
+    const [road, setRoad] = React.useState<RoadDTO | undefined>();
+    const [junctions, setJunctions] = React.useState<JunctionDTO[]>([]);
     const handleAddRoadClick = () => {
         setRoad({});
         setJunctions([
@@ -46,17 +45,21 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
         ]);
     };
 
-    const handleSaveRoadClick = () => {};
+    const handleSaveRoadClick = () => {
+        console.log("saved");
+    };
 
     const handleEditRoad = (id: number) => {
-        const road: RoadDto | undefined = roads.find(
-            (road: RoadDto) => road.id === id
+        const road: RoadDTO | undefined = roads.find(
+            (road: RoadDTO) => road.id === id
         );
         setRoad(road);
 
-        const newJunctions: JunctionDto[] =
-            road?.segments?.map((element) => element.startNode) || [];
-        const j: JunctionDto | undefined = road?.segments?.at(-1)?.endNode;
+        const newJunctions: JunctionDTO[] =
+            road?.segments?.map(
+                (element: RoadSegmentDTO) => element.start as JunctionDTO
+            ) || [];
+        const j: JunctionDTO | undefined = road?.segments?.at(-1)?.end;
         if (j) {
             newJunctions?.push(j);
         }
@@ -77,7 +80,7 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
         junctionIdx: number,
         latLng: LatLng
     ) => {
-        setJunctions((junctions: JunctionDto[]) =>
+        setJunctions((junctions: JunctionDTO[]) =>
             junctions.map((junction, idx) => {
                 if (junctionIdx === idx) {
                     junction.latitude = latLng.lat;
@@ -99,7 +102,7 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
                     attribution={mapConfig.attribution}
                     url={mapConfig.url}
                 />
-                {junctions.map((junction: JunctionDto, idx: number) => (
+                {junctions.map((junction: JunctionDTO, idx: number) => (
                     <MapMarker
                         key={idx}
                         junctionIdx={idx}

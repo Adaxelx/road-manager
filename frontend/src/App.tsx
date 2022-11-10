@@ -1,6 +1,9 @@
 import "./App.scss";
-import { AppRoutes } from "./routes/AppRoutes";
-import { AppProvider } from "./providers/AppProvider";
+import React from "react";
+
+import { AppProvider } from "@src/providers/AppProvider";
+import { AppRoutes } from "@src/routes/AppRoutes";
+
 function App() {
     return (
         <AppProvider>

@@ -1,21 +1,21 @@
-import * as React from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { RoadDto } from "../../../../api/model/roadDto";
-import { JunctionDto } from "../../../../api/model/junctionDto";
+import * as React from "react";
 
-type RoadNetworkViewProps = {
-    road: RoadDto | undefined;
-    junctions: JunctionDto[];
+import { JunctionDTO, RoadDTO } from "@src/api";
+
+interface RoadNetworkViewProps {
+    road: RoadDTO | undefined;
+    junctions: JunctionDTO[];
     handleDeleteJunction: (idx: number) => void;
-};
+}
 
 export const RoadJunctionsTable = ({
     junctions,
@@ -39,7 +39,7 @@ export const RoadJunctionsTable = ({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {junctions.map((j: JunctionDto, idx: number) => (
+                        {junctions.map((j: JunctionDTO, idx: number) => (
                             <TableRow
                                 key={idx}
                                 sx={{
@@ -49,10 +49,10 @@ export const RoadJunctionsTable = ({
                                 }}
                             >
                                 <TableCell align="center">
-                                    {j.latitude.toFixed(3)}
+                                    {j.latitude?.toFixed(3)}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {j.longitude.toFixed(3)}
+                                    {j.longitude?.toFixed(3)}
                                 </TableCell>
                                 <TableCell align="right">
                                     <IconButton

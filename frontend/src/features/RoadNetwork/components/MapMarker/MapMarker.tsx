@@ -1,16 +1,16 @@
-import { Marker, Popup } from "react-leaflet";
-import * as React from "react";
-import { RoadDto } from "../../../../api/model/roadDto";
-import { JunctionDto } from "../../../../api/model/junctionDto";
-import { useMemo, useRef } from "react";
 import { LatLng } from "leaflet";
+import * as React from "react";
+import { useMemo, useRef } from "react";
+import { Marker, Popup } from "react-leaflet";
 
-type MapMarkerProps = {
+import { JunctionDTO, RoadDTO } from "@src/api";
+
+interface MapMarkerProps {
     junctionIdx: number;
-    road: RoadDto | undefined;
-    junction: JunctionDto;
+    road: RoadDTO | undefined;
+    junction: JunctionDTO;
     handleChangeJunctionPosition: (idx: number, latLng: LatLng) => void;
-};
+}
 export const MapMarker = ({
     junctionIdx,
     road,
@@ -25,7 +25,7 @@ export const MapMarker = ({
                 if (marker != null) {
                     handleChangeJunctionPosition(
                         junctionIdx,
-                        // @ts-ignore
+                        // @ts-expect-error
                         marker.getLatLng()
                     );
                 }
@@ -39,14 +39,16 @@ export const MapMarker = ({
         latitude,
         longitude,
     }: {
-        latitude: number;
-        longitude: number;
+        latitude: number | undefined;
+        longitude: number | undefined;
         roadName?: string | undefined;
-    }) => `(${latitude.toFixed(3)}, ${longitude.toFixed(3)}) ${roadName}`;
+    }) => `(${latitude?.toFixed(3)}, ${longitude?.toFixed(3)}) ${roadName}`;
 
     return (
         <Marker
-            position={[junction.latitude, junction.longitude]}
+            position={
+                [junction.latitude, junction.longitude] as [number, number]
+            }
             draggable={true}
             ref={markerRef}
             eventHandlers={eventHandlers}

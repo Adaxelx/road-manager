@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { DrivePresenter } from "../features/Drive/routes/DrivePresenter";
-import { Home } from "../features/Home/routes/Home";
-import { RoadNetworkPresenter } from "../features/RoadNetwork/routes/RoadNetworkPresenter";
-import { OrangeThemeProvider } from "../providers/OrangeThemeProvider";
-import { NavHeader } from "../shared/Layout/components/NavHeader/NavHeader";
-import { Layout } from "../shared/Layout/Layout";
+
+import { OrangeThemeProvider } from "@src/providers/OrangeThemeProvider";
+import { NavHeader } from "@src/shared/Layout/components/NavHeader/NavHeader";
+import { Layout } from "@src/shared/Layout/Layout";
+import { DrivePresenter } from "@features/Drive/routes/DrivePresenter";
+import { Home } from "@features/Home/routes/Home";
+import { RoadNetworkPresenter } from "@features/RoadNetwork/routes/RoadNetworkPresenter";
 
 const App = () => {
     return (
