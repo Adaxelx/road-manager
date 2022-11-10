@@ -19,11 +19,14 @@ public class Drive implements DriveAPI {
     private ModelMapper modelMapper;
 
     @Override
-    public void registerVehicle(VehicleDTO vehicleDTO) {
+    public int registerVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = new Vehicle();
-        CepikAPI.getDataFromCEPIK(vehicleDTO);
+        if (!CepikAPI.getDataFromCEPIK(vehicleDTO)) {
+            return 400;
+        }
 
         modelMapper.map(vehicleDTO, vehicle);
         vehicleRepository.save(vehicle);
+        return 200;
     }
 }

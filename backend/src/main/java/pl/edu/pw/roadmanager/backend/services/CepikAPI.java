@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 
 public interface CepikAPI {
 
-    static void getDataFromCEPIK(VehicleDTO vehicleDTO) {
+    static boolean getDataFromCEPIK(VehicleDTO vehicleDTO) {
         String CEPIK_URL = "https://api.cepik.gov.pl/pojazdy/";
         String requestURL = CEPIK_URL + vehicleDTO.getTechnicalID();
 
@@ -24,7 +24,7 @@ public interface CepikAPI {
             httpURLConnection.setRequestMethod("GET");
             int responseCode = httpURLConnection.getResponseCode();
             if (!HttpStatus.valueOf(responseCode).is2xxSuccessful()) {
-                return;
+                return false;
             }
             BufferedReader bf = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String inputLine;
@@ -38,6 +38,7 @@ public interface CepikAPI {
                     .getJSONObject("attributes");
 
             setVehicleDataFromJSON(vehicleData, vehicleDTO);
+            return true;
         } catch (IOException | JSONException | ParseException e) {
             throw new RuntimeException(e);
         }
@@ -46,11 +47,12 @@ public interface CepikAPI {
     private static void setVehicleDataFromJSON(JSONObject vehicleData, VehicleDTO vehicleDTO) throws JSONException, ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        vehicleDTO.setCylinderCapacity((float) vehicleData.get("pojemnosc-skokowa-silnika"));
+        vehicleDTO.setFirstOwner("Jan Kowalski");
+        vehicleDTO.setCylinderCapacity(vehicleData.getDouble("pojemnosc-skokowa-silnika"));
         vehicleDTO.setManufacturer(vehicleData.getString("marka"));
         vehicleDTO.setModel(vehicleData.getString("model"));
         vehicleDTO.setProductionYear(dateFormat.parse(vehicleData.getString("data-pierwszej-rejestracji-w-kraju")));
         vehicleDTO.setType(vehicleData.getString("typ"));
-        vehicleDTO.setWeight((float) vehicleData.get("masa-wlasna"));
+        vehicleDTO.setWeight(vehicleData.getDouble("masa-wlasna"));
     }
 }

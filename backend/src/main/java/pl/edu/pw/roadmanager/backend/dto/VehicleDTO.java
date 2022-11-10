@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pw.roadmanager.backend.domain.AppUser;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +15,7 @@ public class VehicleDTO {
 
     private Long id;
 
-    private float cylinderCapacity;
+    private double cylinderCapacity;
 
     private String manufacturer;
 
@@ -31,7 +29,9 @@ public class VehicleDTO {
 
     private String type;
 
-    private float weight;
+    private double weight;
 
-    private List<AppUser> users;
+    private String secondOwner;
+
+    private String firstOwner;
 }

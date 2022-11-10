@@ -18,7 +18,7 @@ public class DriveController {
 
     @PostMapping("/drive")
     public ResponseEntity<?> registerVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        driveAPI.registerVehicle(vehicleDTO);
-        return ResponseEntity.ok().build();
+        int responseCode = driveAPI.registerVehicle(vehicleDTO);
+        return ResponseEntity.status(responseCode).build();
     }
 }

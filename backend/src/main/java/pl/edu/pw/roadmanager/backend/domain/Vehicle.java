@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -21,7 +20,7 @@ public class Vehicle {
     private Long id;
 
     @Column(name = "cylinder_capacity", updatable = true)
-    private float cylinderCapacity;
+    private double cylinderCapacity;
 
     @Column(name = "manufacturer", updatable = true)
     private String manufacturer;
@@ -42,8 +41,11 @@ public class Vehicle {
     private String type;
 
     @Column(name = "weight", updatable = true)
-    private float weight;
+    private double weight;
 
-    @ManyToMany(mappedBy = "vehicles")
-    private List<AppUser> users;
+    @Column(name = "first_owner", updatable = true)
+    private String firstOwner;
+
+    @Column(name = "second_owner", updatable = true)
+    private String secondOwner;
 }
