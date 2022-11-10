@@ -1,4 +1,3 @@
-import { RoadDto } from "../../../../api/model/roadDto";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -10,18 +9,13 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import * as React from "react";
+import { RoadDTO } from "../../../../api";
 
 interface RoadListProps {
-    roads: RoadDto[];
+    roads: RoadDTO[];
     handleEditRoad: (id: number) => void;
 }
 export const RoadList = ({ roads, handleEditRoad }: RoadListProps) => {
-    // const rows = road.segments?.map((element) => element.startNode);
-    // const j: JunctionDto | undefined = road.segments?.at(-1)?.endNode;
-    // if (j !== undefined) {
-    //     rows?.push(j);
-    // }
-    //
     return (
         <TableContainer sx={{ mt: 5 }} component={Paper}>
             <Table
@@ -41,7 +35,7 @@ export const RoadList = ({ roads, handleEditRoad }: RoadListProps) => {
                 </TableHead>
                 <TableBody>
                     {roads ? (
-                        roads.map((road: RoadDto, idx: number) => (
+                        roads.map((road: RoadDTO, idx: number) => (
                             <TableRow
                                 key={idx}
                                 sx={{

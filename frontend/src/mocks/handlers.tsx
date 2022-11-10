@@ -1,17 +1,17 @@
 import { rest } from "msw";
-import { RoadNetworkDto } from "../api/model/roadNetworkDto";
+import { RoadNetworkDTO } from "../api";
 
-const roadsNetwork: RoadNetworkDto = {
-    roadDtos: [
+const roadsNetwork: RoadNetworkDTO = {
+    roadDTOS: [
         {
             name: "Autostrada 1",
             segments: [
                 {
-                    startNode: {
+                    start: {
                         latitude: 51.941,
                         longitude: 19.0945,
                     },
-                    endNode: {
+                    end: {
                         latitude: 51.931,
                         longitude: 19.1945,
                     },

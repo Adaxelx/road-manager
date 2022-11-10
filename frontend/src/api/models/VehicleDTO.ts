@@ -73,6 +73,12 @@ export interface VehicleDTO {
      * @memberof VehicleDTO
      */
     weight?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof VehicleDTO
+     */
+    secondOwnerName?: string;
 }
 
 /**
@@ -115,6 +121,9 @@ export function VehicleDTOFromJSONTyped(
             : json["technicalID"],
         type: !exists(json, "type") ? undefined : json["type"],
         weight: !exists(json, "weight") ? undefined : json["weight"],
+        secondOwnerName: !exists(json, "secondOwnerName")
+            ? undefined
+            : json["secondOwnerName"],
     };
 }
 
@@ -135,5 +144,6 @@ export function VehicleDTOToJSON(value?: VehicleDTO | null): any {
         technicalID: value.technicalID,
         type: value.type,
         weight: value.weight,
+        secondOwnerName: value.secondOwnerName,
     };
 }
