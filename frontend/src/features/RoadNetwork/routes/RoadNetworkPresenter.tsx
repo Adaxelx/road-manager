@@ -6,6 +6,7 @@ import { RoadNetworkView } from "../components/RoadNetworkView/RoadNetworkView";
 export const RoadNetworkPresenter = () => {
     const roads: RoadDto[] = [
         {
+            id: 1,
             name: "Autostrada 1",
             segments: [
                 {
@@ -16,6 +17,22 @@ export const RoadNetworkPresenter = () => {
                     endNode: {
                         latitude: 51.931,
                         longitude: 19.1945,
+                    },
+                },
+            ],
+        },
+        {
+            id: 2,
+            name: "Autostrada2",
+            segments: [
+                {
+                    startNode: {
+                        latitude: 52.941,
+                        longitude: 11.0945,
+                    },
+                    endNode: {
+                        latitude: 51.931,
+                        longitude: 11.1945,
                     },
                 },
             ],
