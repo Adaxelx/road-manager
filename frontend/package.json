@@ -9,8 +9,8 @@
         "update-mocks": "npx msw init public --no-save",
         "build": "tsc && vite build",
         "preview": "vite preview",
-        "openapi-generate": "rimraf src/api & openapi-generator-cli generate -i openapi/swagger.yaml -g typescript-fetch -o src/api/ --additional-properties=stringEnums & npm run openapi-lint",
-        "openapi-lint": "npx prettier --write src/api"
+        "openapi-generate": "rimraf src/api & openapi-generator-cli generate -i openapi/swagger.yaml -g typescript-fetch -o src/api/ --additional-properties=stringEnums & npm run openapi-prettier",
+        "openapi-prettier": "npx prettier --write src/api"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",
