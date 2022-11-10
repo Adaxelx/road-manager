@@ -5,7 +5,6 @@ import "./index.scss";
 import { worker } from "./mocks/browser.js";
 
 if (process.env.NODE_ENV?.trim() == "mock") {
-    console.log("start");
     worker.start();
 }
 

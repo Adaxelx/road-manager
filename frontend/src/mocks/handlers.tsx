@@ -22,11 +22,15 @@ const roadsNetwork: RoadNetworkDto = {
 };
 
 export const handlers = [
-    rest.get("/road-network", (req, res, ctx) => {
+    rest.get("/roadNetwork", (req, res, ctx) => {
         return res(ctx.json(roadsNetwork));
     }),
 
-    rest.post("/road-network/:id", (req, res, ctx) => {
+    rest.post("/roadNetwork", (req, res, ctx) => {
+        return res(ctx.json({}));
+    }),
+
+    rest.post("/drive", (req, res, ctx) => {
         return res(ctx.json({}));
     }),
 ];

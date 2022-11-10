@@ -1,0 +1,12 @@
+.openapi-generator-ignore
+apis/DriveApi.ts
+apis/RoadNetworkApi.ts
+apis/index.ts
+index.ts
+models/JunctionDTO.ts
+models/RoadDTO.ts
+models/RoadNetworkDTO.ts
+models/RoadSegmentDTO.ts
+models/VehicleDTO.ts
+models/index.ts
+runtime.ts
