@@ -4,11 +4,11 @@ import "./RoadNetworkView.scss";
 
 import { MapContainer, TileLayer } from "react-leaflet";
 import { LatLng, LatLngExpression } from "leaflet";
-import { MapMarker } from "../MapMarker/MapMarker";
 import Button from "@mui/material/Button";
-import { RoadJunctionsTable } from "./RoadJunctionsTable";
-import { RoadList } from "./RoadList";
-import { JunctionDTO, RoadDTO, RoadSegmentDTO } from "../../../../api";
+import { JunctionDTO, RoadDTO, RoadSegmentDTO } from "@src/api";
+import { MapMarker } from "@features/RoadNetwork/components/MapMarker/MapMarker";
+import { RoadJunctionsTable } from "@features/RoadNetwork/components/RoadNetworkView/RoadJunctionsTable";
+import { RoadList } from "@features/RoadNetwork/components/RoadNetworkView/RoadList";
 
 interface MapConfig {
     mapCenter: LatLngExpression;

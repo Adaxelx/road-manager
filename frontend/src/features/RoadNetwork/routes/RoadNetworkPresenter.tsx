@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { RoadNetworkView } from "../components/RoadNetworkView/RoadNetworkView";
-import { RoadDTO } from "../../../api";
+import { RoadDTO } from "@src/api";
+import { RoadNetworkView } from "@features/RoadNetwork/components/RoadNetworkView/RoadNetworkView";
 
 export const RoadNetworkPresenter = () => {
     const roads: RoadDTO[] = [

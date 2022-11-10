@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import * as React from "react";
-import { RoadDTO } from "../../../../api";
+import { RoadDTO } from "@src/api";
 
 interface RoadListProps {
     roads: RoadDTO[];

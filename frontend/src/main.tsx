@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import "./index.scss";
-import { worker } from "./mocks/browser.js";
+import App from "@src/App";
+import { worker } from "@src/mocks/browser";
 
 if (process.env.NODE_ENV?.trim() == "mock") {
     worker.start();

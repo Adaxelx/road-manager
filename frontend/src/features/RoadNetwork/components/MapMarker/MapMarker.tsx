@@ -2,7 +2,7 @@ import { Marker, Popup } from "react-leaflet";
 import * as React from "react";
 import { useMemo, useRef } from "react";
 import { LatLng } from "leaflet";
-import { JunctionDTO, RoadDTO } from "../../../../api";
+import { JunctionDTO, RoadDTO } from "@src/api";
 
 type MapMarkerProps = {
     junctionIdx: number;

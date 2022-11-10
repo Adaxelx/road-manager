@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
 import { object, string } from "yup";
-import { VehicleDTO } from "../../../api";
+import { VehicleDTO } from "@src/api";
 
 interface DriveProps {
     isSuccess: boolean;
