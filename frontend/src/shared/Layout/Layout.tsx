@@ -1,9 +1,10 @@
 import * as React from "react";
-import { ContentLayout } from "./components/ContentLayout/ContentLayout";
 
-type LayoutProps = {
+import { ContentLayout } from "@src/shared/Layout/components/ContentLayout/ContentLayout";
+
+interface LayoutProps {
     children: React.ReactNode;
-};
+}
 
 export const Layout = (props: LayoutProps) => {
     return (

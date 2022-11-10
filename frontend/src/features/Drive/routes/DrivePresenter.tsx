@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
 import { object, string } from "yup";
+
 import { VehicleDTO } from "@src/api";
 
 interface DriveProps {
@@ -85,8 +86,8 @@ const DriveView = (props: DriveProps) => {
 };
 
 export const DrivePresenter = () => {
-    let [succMsg, setSuccMsg] = React.useState(false);
-    let [errMsg, setErrMsg] = React.useState(false);
+    const [succMsg, setSuccMsg] = React.useState(false);
+    const [errMsg, setErrMsg] = React.useState(false);
 
     const submit = (v: VehicleDTO) => {
         saveVehicle(v);

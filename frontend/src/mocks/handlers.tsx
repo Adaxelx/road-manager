@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import { RoadNetworkDTO } from "../api";
+
+import { RoadNetworkDTO } from "@src/api";
 
 const roadsNetwork: RoadNetworkDTO = {
     roadDTOS: [

@@ -1,15 +1,16 @@
-import { Marker, Popup } from "react-leaflet";
+import { LatLng } from "leaflet";
 import * as React from "react";
 import { useMemo, useRef } from "react";
-import { LatLng } from "leaflet";
+import { Marker, Popup } from "react-leaflet";
+
 import { JunctionDTO, RoadDTO } from "@src/api";
 
-type MapMarkerProps = {
+interface MapMarkerProps {
     junctionIdx: number;
     road: RoadDTO | undefined;
     junction: JunctionDTO;
     handleChangeJunctionPosition: (idx: number, latLng: LatLng) => void;
-};
+}
 export const MapMarker = ({
     junctionIdx,
     road,
@@ -24,7 +25,7 @@ export const MapMarker = ({
                 if (marker != null) {
                     handleChangeJunctionPosition(
                         junctionIdx,
-                        // @ts-ignore
+                        // @ts-expect-error
                         marker.getLatLng()
                     );
                 }

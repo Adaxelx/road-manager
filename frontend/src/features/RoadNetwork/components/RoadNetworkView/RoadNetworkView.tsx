@@ -1,10 +1,10 @@
-import * as React from "react";
-import "leaflet/dist/leaflet.css";
 import "./RoadNetworkView.scss";
-
-import { MapContainer, TileLayer } from "react-leaflet";
-import { LatLng, LatLngExpression } from "leaflet";
+import "leaflet/dist/leaflet.css";
 import Button from "@mui/material/Button";
+import { LatLng, LatLngExpression } from "leaflet";
+import React from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
+
 import { JunctionDTO, RoadDTO, RoadSegmentDTO } from "@src/api";
 import { MapMarker } from "@features/RoadNetwork/components/MapMarker/MapMarker";
 import { RoadJunctionsTable } from "@features/RoadNetwork/components/RoadNetworkView/RoadJunctionsTable";
@@ -24,9 +24,9 @@ const mapConfig: MapConfig = {
     zoom: 6,
 };
 
-type RoadNetworkViewProps = {
+interface RoadNetworkViewProps {
     roads: RoadDTO[];
-};
+}
 
 export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
     const [road, setRoad] = React.useState<RoadDTO | undefined>();
@@ -45,7 +45,9 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
         ]);
     };
 
-    const handleSaveRoadClick = () => {};
+    const handleSaveRoadClick = () => {
+        console.log("saved");
+    };
 
     const handleEditRoad = (id: number) => {
         const road: RoadDTO | undefined = roads.find(
