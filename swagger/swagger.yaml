@@ -22,12 +22,12 @@ paths:
       summary: Get all roads
       operationId: getRoadNetwork
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/RoadNetworkDTO'
+                $ref: "#/components/schemas/RoadNetworkDTO"
     post:
       tags:
         - RoadNetwork
@@ -37,10 +37,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RoadDTO'
+              $ref: "#/components/schemas/RoadDTO"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
   /drive:
     post:
@@ -52,11 +52,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VehicleDTO'
+              $ref: "#/components/schemas/VehicleDTO"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
+        "400":
+          description: Operation error
 components:
   schemas:
     RoadNetworkDTO:
@@ -65,7 +67,7 @@ components:
         RoadDTOS:
           type: array
           items:
-            $ref: '#/components/schemas/RoadDTO'
+            $ref: "#/components/schemas/RoadDTO"
     RoadDTO:
       type: object
       properties:
@@ -86,15 +88,15 @@ components:
             - NATIONAL_ROAD
             - VOIVODESHIP_ROAD
           example: "HIGHWAY"
-        segments: 
+        segments:
           type: array
           items:
-              $ref: '#/components/schemas/RoadSegmentDTO'
+            $ref: "#/components/schemas/RoadSegmentDTO"
     RoadSegmentDTO:
       type: object
       properties:
         end:
-          $ref: '#/components/schemas/JunctionDTO'
+          $ref: "#/components/schemas/JunctionDTO"
         id:
           type: integer
           example: 10
@@ -102,7 +104,7 @@ components:
           type: number
           example: 12313.32
         start:
-          $ref: '#/components/schemas/JunctionDTO'
+          $ref: "#/components/schemas/JunctionDTO"
     JunctionDTO:
       type: object
       properties:
@@ -135,7 +137,7 @@ components:
           example: "ABCD"
         productionYear:
           type: string
-          example: "ABCD"
+          example: "2000-10-30"
         registrationNumber:
           type: string
           example: "ABCD"
@@ -148,3 +150,5 @@ components:
         weight:
           type: number
           example: 1.2323
+        secondOwnerName:
+          type: string
