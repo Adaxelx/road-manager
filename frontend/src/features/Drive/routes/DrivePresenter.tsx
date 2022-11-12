@@ -1,8 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
-import { object, string } from "yup";
+import { object, string, number } from "yup";
 
-import { VehicleDTO } from "@src/api";
+import { DriveApi, VehicleDTO } from "@src/api";
 
 interface DriveProps {
     isSuccess: boolean;
@@ -10,17 +10,12 @@ interface DriveProps {
 }
 
 const validationSchema = object().shape({
-    secondOwnerName: string().required(),
-    registrationNumber: string().required(),
-    technicalID: string().required(),
+    registrationNumber: string().required("Numer rejestracyjny jest wymagany"),
+    technicalID: number().typeError("Identyfikator techniczny musi być liczbą całkowitą").required("Identyfikator techniczny jest wymagany"),
 });
 
 const initialFormValues: VehicleDTO = {
-    //TODO w bazie nie nie ma teraz secondOwnerName - trzeba usunąć z api
-    secondOwnerName: "",
     registrationNumber: "",
-
-    //TODO w bazie to technicalID jest teraz intem
     technicalID: "" || 0,
 };
 
@@ -48,12 +43,6 @@ const DriveView = (props: DriveProps) => {
             >
                 {({ isValid, isSubmitting }) => (
                     <Form style={{ display: "grid", width: "fit-content" }}>
-                        <label htmlFor="secondOwnerName">
-                            Imię i nazwisko drugiego właściciela
-                        </label>
-                        <Field name="secondOwnerName" />
-                        <ErrorMessage name="secondOwnerName" component="div" />
-
                         <label htmlFor="registrationNumber">
                             Numer rejestracyjny
                         </label>
@@ -87,7 +76,6 @@ const DriveView = (props: DriveProps) => {
 
 export const DrivePresenter = () => {
     const [succMsg, setSuccMsg] = React.useState(false);
-    const [errMsg, setErrMsg] = React.useState(false);
 
     const submit = (v: VehicleDTO) => {
         saveVehicle(v);
@@ -95,7 +83,7 @@ export const DrivePresenter = () => {
     };
 
     const saveVehicle = (v: VehicleDTO) => {
-        console.log(v);
+        new DriveApi().registerVehicle({ vehicleDTO: v });
     };
 
     const displayForm = () => {
