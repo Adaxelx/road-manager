@@ -65,9 +65,12 @@ export class DriveApi extends runtime.BaseAPI {
      * Register vehicle
      */
     async registerVehicle(
-        requestParameters: RegisterVehicleRequest,
+        vehicleDTO: VehicleDTO,
         initOverrides?: RequestInit | runtime.InitOverrideFunction
     ): Promise<void> {
-        await this.registerVehicleRaw(requestParameters, initOverrides);
+        await this.registerVehicleRaw(
+            { vehicleDTO: vehicleDTO },
+            initOverrides
+        );
     }
 }

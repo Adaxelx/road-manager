@@ -1,4 +1,6 @@
+import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -15,17 +17,17 @@ interface RoadNetworkViewProps {
     road: RoadDTO | undefined;
     junctions: JunctionDTO[];
     handleDeleteJunction: (idx: number) => void;
+    handleAddJunction: () => void;
 }
 
 export const RoadJunctionsTable = ({
     junctions,
-    road,
     handleDeleteJunction,
+    handleAddJunction,
 }: RoadNetworkViewProps) => {
-    return junctions.length ? (
+    return (
         <>
-            <div>{road?.name}</div>
-            <TableContainer component={Paper}>
+            <TableContainer sx={{ mt: 2, mb: 4 }} component={Paper}>
                 <Table
                     sx={{ minWidth: 650 }}
                     size="small"
@@ -33,8 +35,8 @@ export const RoadJunctionsTable = ({
                 >
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Coordinate X</TableCell>
-                            <TableCell align="center">Coordinate Y</TableCell>
+                            <TableCell align="center">Latitude</TableCell>
+                            <TableCell align="center">Longitude</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
                     </TableHead>
@@ -68,11 +70,21 @@ export const RoadJunctionsTable = ({
                                 </TableCell>
                             </TableRow>
                         ))}
+                        <TableRow>
+                            <TableCell colSpan={3} align="center">
+                                <Button
+                                    size="small"
+                                    color="success"
+                                    onClick={handleAddJunction}
+                                    startIcon={<AddIcon fontSize="inherit" />}
+                                >
+                                    Dodaj skrzyżowanie
+                                </Button>
+                            </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
         </>
-    ) : (
-        <div>No road selected!</div>
     );
 };

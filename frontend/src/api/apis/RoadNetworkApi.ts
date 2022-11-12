@@ -70,10 +70,10 @@ export class RoadNetworkApi extends runtime.BaseAPI {
      * Add or update road by id
      */
     async addOrEditRoad(
-        requestParameters: AddOrEditRoadRequest,
+        roadDTO: RoadDTO,
         initOverrides?: RequestInit | runtime.InitOverrideFunction
     ): Promise<void> {
-        await this.addOrEditRoadRaw(requestParameters, initOverrides);
+        await this.addOrEditRoadRaw({ roadDTO: roadDTO }, initOverrides);
     }
 
     /**
