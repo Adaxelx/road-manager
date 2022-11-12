@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as React from "react";
-import { object, string, number } from "yup";
+import { number, object, string } from "yup";
 
 import { DriveApi, VehicleDTO } from "@src/api";
 
@@ -10,11 +10,15 @@ interface DriveProps {
 }
 
 const validationSchema = object().shape({
+    secondOwnerName: string(),
     registrationNumber: string().required("Numer rejestracyjny jest wymagany"),
-    technicalID: number().typeError("Identyfikator techniczny musi być liczbą całkowitą").required("Identyfikator techniczny jest wymagany"),
+    technicalID: number()
+        .typeError("Identyfikator techniczny musi być liczbą całkowitą")
+        .required("Identyfikator techniczny jest wymagany"),
 });
 
 const initialFormValues: VehicleDTO = {
+    secondOwnerName: "",
     registrationNumber: "",
     technicalID: "" || 0,
 };
@@ -47,7 +51,6 @@ const DriveView = (props: DriveProps) => {
                             Imię i nazwisko drugiego właściciela
                         </label>
                         <Field name="secondOwnerName" />
-                        <ErrorMessage name="secondOwnerName" component="div" />
 
                         <label htmlFor="registrationNumber">
                             Numer rejestracyjny
@@ -89,7 +92,7 @@ export const DrivePresenter = () => {
     };
 
     const saveVehicle = (v: VehicleDTO) => {
-        new DriveApi().registerVehicle({ vehicleDTO: v });
+        new DriveApi().registerVehicle(v);
     };
 
     const displayForm = () => {
