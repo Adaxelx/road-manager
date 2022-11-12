@@ -1,17 +1,17 @@
-import "./RoadNetworkView.scss";
 import "leaflet/dist/leaflet.css";
-import Button from "@mui/material/Button";
-import { LatLng, LatLngExpression } from "leaflet";
+import { Alert, Snackbar } from "@mui/material";
+import { LatLng } from "leaflet";
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 
 import { JunctionDTO, RoadDTO, RoadSegmentDTO } from "@src/api";
 import { MapMarker } from "@features/RoadNetwork/components/MapMarker/MapMarker";
+import { RoadForm } from "@features/RoadNetwork/components/RoadNetworkView/RoadForm";
 import { RoadJunctionsTable } from "@features/RoadNetwork/components/RoadNetworkView/RoadJunctionsTable";
 import { RoadList } from "@features/RoadNetwork/components/RoadNetworkView/RoadList";
 
 interface MapConfig {
-    mapCenter: LatLngExpression;
+    mapCenter: [number, number];
     url: string;
     attribution: string;
     zoom: number;
@@ -24,32 +24,39 @@ const mapConfig: MapConfig = {
     zoom: 6,
 };
 
-interface RoadNetworkViewProps {
-    roads: RoadDTO[];
+export enum EditMode {
+    NONE,
+    EDIT,
+    ADD,
 }
 
-export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
+interface RoadNetworkViewProps {
+    roads: RoadDTO[];
+    saveRoad: (road: RoadDTO, junctions: JunctionDTO[]) => Promise<void>;
+}
+export const RoadNetworkView = ({ roads, saveRoad }: RoadNetworkViewProps) => {
     const [road, setRoad] = React.useState<RoadDTO | undefined>();
     const [junctions, setJunctions] = React.useState<JunctionDTO[]>([]);
+
+    const [editMode, setEditMode] = React.useState<EditMode>(EditMode.NONE);
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
     const handleAddRoadClick = () => {
         setRoad({});
-        setJunctions([
-            {
-                latitude: 51.941,
-                longitude: 19.0945,
-            },
-            {
-                latitude: 52.941,
-                longitude: 16.0945,
-            },
-        ]);
+        setEditMode(EditMode.ADD);
+        setJunctions([]);
     };
 
-    const handleSaveRoadClick = () => {
-        console.log("saved");
+    const handleSaveRoadClick = (road: RoadDTO) => {
+        saveRoad(road, junctions).then(() => {
+            setSnackbarOpen(true);
+            setEditMode(EditMode.NONE);
+        });
     };
 
     const handleEditRoad = (id: number) => {
+        setEditMode(EditMode.EDIT);
+
         const road: RoadDTO | undefined = roads.find(
             (road: RoadDTO) => road.id === id
         );
@@ -70,8 +77,8 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
         setJunctions([
             ...junctions,
             {
-                latitude: 51.941,
-                longitude: 19.0945,
+                latitude: mapConfig.mapCenter[0],
+                longitude: mapConfig.mapCenter[1],
             },
         ]);
     };
@@ -97,6 +104,31 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
 
     return (
         <>
+            <h1>Sieć drogowa</h1>
+            <RoadList
+                roads={roads}
+                handleEditRoad={handleEditRoad}
+                handleAddRoadClick={handleAddRoadClick}
+            />
+
+            {!(editMode !== EditMode.NONE) || (
+                <RoadForm
+                    key={road?.name || editMode}
+                    editMode={editMode}
+                    road={road}
+                    junctions={junctions}
+                    handleSaveRoadClick={handleSaveRoadClick}
+                    table={
+                        <RoadJunctionsTable
+                            junctions={junctions}
+                            road={road}
+                            handleDeleteJunction={handleDeleteJunction}
+                            handleAddJunction={handleAddJunction}
+                        />
+                    }
+                />
+            )}
+
             <MapContainer center={mapConfig.mapCenter} zoom={mapConfig.zoom}>
                 <TileLayer
                     attribution={mapConfig.attribution}
@@ -114,33 +146,21 @@ export const RoadNetworkView = ({ roads }: RoadNetworkViewProps) => {
                     ></MapMarker>
                 ))}
             </MapContainer>
-            <RoadJunctionsTable
-                junctions={junctions}
-                road={road}
-                handleDeleteJunction={handleDeleteJunction}
-            />
-            <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-                onClick={handleAddRoadClick}
+
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                sx={{ width: "90%" }}
+                onClose={() => setSnackbarOpen(false)}
             >
-                Dodaj drogę
-            </Button>
-            <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-                onClick={handleSaveRoadClick}
-            >
-                Zapisz drogę
-            </Button>
-            <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-                onClick={handleAddJunction}
-            >
-                Dodaj skrzyżowanie
-            </Button>
-            <RoadList roads={roads} handleEditRoad={handleEditRoad} />
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                >
+                    Pomyślna edycja drogi!
+                </Alert>
+            </Snackbar>
         </>
     );
 };

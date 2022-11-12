@@ -16,7 +16,6 @@ const validationSchema = object().shape({
 });
 
 const initialFormValues: VehicleDTO = {
-    //TODO w bazie nie nie ma teraz secondOwnerName - trzeba usunąć z api
     secondOwnerName: "",
     registrationNumber: "",
 

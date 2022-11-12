@@ -1,5 +1,7 @@
+import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -11,14 +13,20 @@ import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 
 import { RoadDTO } from "@src/api";
+import { RoadTypeString } from "@src/types/RoadTypeString";
 
 interface RoadListProps {
     roads: RoadDTO[];
     handleEditRoad: (id: number) => void;
+    handleAddRoadClick: () => void;
 }
-export const RoadList = ({ roads, handleEditRoad }: RoadListProps) => {
+export const RoadList = ({
+    roads,
+    handleEditRoad,
+    handleAddRoadClick,
+}: RoadListProps) => {
     return (
-        <TableContainer sx={{ mt: 5 }} component={Paper}>
+        <TableContainer sx={{ mb: 5 }} component={Paper}>
             <Table
                 sx={{ minWidth: 650 }}
                 size="small"
@@ -26,62 +34,89 @@ export const RoadList = ({ roads, handleEditRoad }: RoadListProps) => {
             >
                 <TableHead>
                     <TableRow>
-                        <TableCell>Code</TableCell>
-                        <TableCell align="left">Name</TableCell>
-                        <TableCell align="right">Type</TableCell>
-                        <TableCell align="right">Number of nodes</TableCell>
-                        <TableCell align="right"></TableCell>
+                        <TableCell>Kod</TableCell>
+                        <TableCell align="left">Nazwa</TableCell>
+                        <TableCell align="left">Typ</TableCell>
+                        {/*<TableCell align="right">Liczba skrzyżowań</TableCell>*/}
                         <TableCell align="right"></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {roads ? (
-                        roads.map((road: RoadDTO, idx: number) => (
-                            <TableRow
-                                key={idx}
-                                sx={{
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                    },
-                                }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {road.code}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {road.name}
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {road.type}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {road.segments?.length}
-                                </TableCell>
-                                <TableCell align="right">
-                                    <IconButton
-                                        aria-label="edit"
+                        <>
+                            {roads.map((road: RoadDTO, idx: number) => (
+                                <TableRow
+                                    key={idx}
+                                    sx={{
+                                        "&:last-child td, &:last-child th": {
+                                            border: 0,
+                                        },
+                                    }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {road.code}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {road.name}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
+                                        {road.type
+                                            ? RoadTypeString[
+                                                  road.type
+                                              ].toUpperCase()
+                                            : ""}
+                                    </TableCell>
+                                    {/*<TableCell align="right">*/}
+                                    {/*    {road.segments?.length}*/}
+                                    {/*</TableCell>*/}
+                                    <TableCell
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            gap: 2,
+                                        }}
+                                        align="center"
+                                    >
+                                        <IconButton
+                                            aria-label="edit"
+                                            size="small"
+                                            color="info"
+                                            onClick={() =>
+                                                handleEditRoad(
+                                                    road.id as number
+                                                )
+                                            }
+                                        >
+                                            <EditIcon fontSize="inherit" />
+                                        </IconButton>
+                                        <IconButton
+                                            aria-label="delete"
+                                            size="small"
+                                            color="error"
+                                        >
+                                            <DeleteIcon fontSize="inherit" />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            <TableRow>
+                                <TableCell colSpan={4} align="center">
+                                    <Button
+                                        sx={{ mt: 2 }}
                                         size="small"
-                                        color="info"
-                                        onClick={() =>
-                                            handleEditRoad(road.id as number)
+                                        color="success"
+                                        onClick={handleAddRoadClick}
+                                        startIcon={
+                                            <AddIcon fontSize="inherit" />
                                         }
                                     >
-                                        <EditIcon fontSize="inherit" />
-                                    </IconButton>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <IconButton
-                                        aria-label="delete"
-                                        size="small"
-                                        color="error"
-                                    >
-                                        <DeleteIcon fontSize="inherit" />
-                                    </IconButton>
+                                        Dodaj drogę
+                                    </Button>
                                 </TableCell>
                             </TableRow>
-                        ))
+                        </>
                     ) : (
-                        <div>brak zaznaczonych punktów</div>
+                        <div>Lista dróg jest pusta!</div>
                     )}
                 </TableBody>
             </Table>
