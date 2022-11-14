@@ -27,13 +27,11 @@ public class Drive implements DriveAPI {
 
     @Override
     public int registerVehicle(VehicleDTO vehicleDTO) {
-        String firstName = vehicleDTO.getSecondOwner().split(" ")[0].toLowerCase();
-        String lastName = vehicleDTO.getSecondOwner().split(" ")[1].toLowerCase();
-        Stream<AppUser> secondOwners = appUserRepository.findAll()
-                .stream()
-                .filter(user -> user.getFirstName().toLowerCase().equals(firstName) && user.getLastName().toLowerCase().equals(lastName));
-        if (secondOwners.count() != 1) {
-            return 400;
+        String secondOwnerName = vehicleDTO.getSecondOwner();
+        if (secondOwnerProvided(secondOwnerName)) {
+            if (secondOwnerDoesntExists(secondOwnerName)) {
+                return 400;
+            }
         }
 
         Vehicle vehicle = new Vehicle();
@@ -44,5 +42,23 @@ public class Drive implements DriveAPI {
         modelMapper.map(vehicleDTO, vehicle);
         vehicleRepository.save(vehicle);
         return 200;
+    }
+
+    private boolean secondOwnerDoesntExists(String secondOwnerName) {
+        String[] names = secondOwnerName.toLowerCase().split(" ");
+        if (names.length != 2){
+            return true;
+        }
+
+        String firstName = names[0];
+        String lastName = names[1];
+        Stream<AppUser> secondOwners = appUserRepository.findAll()
+                .stream()
+                .filter(user -> user.getFirstName().toLowerCase().equals(firstName) && user.getLastName().toLowerCase().equals(lastName));
+        return secondOwners.count() != 1;
+    }
+
+    private boolean secondOwnerProvided(String secondOwnerName) {
+        return secondOwnerName != null && !secondOwnerName.isEmpty();
     }
 }
