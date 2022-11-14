@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.domain.Road;
+import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
 import pl.edu.pw.roadmanager.backend.dto.RoadDTO;
 import pl.edu.pw.roadmanager.backend.dto.RoadNetworkDTO;
 import pl.edu.pw.roadmanager.backend.repositories.RoadRepository;
