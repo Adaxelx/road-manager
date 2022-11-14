@@ -32,3 +32,9 @@ INSERT INTO APP_USER VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '1234
 2022-11-14 21:11:34 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER [*]VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789')"; expected "., (, OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, SORTED, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
 INSERT INTO APP_USER VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789') [42001-214]
+2022-11-14 22:54:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (APP_USER: ""ID"" BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."APP_USER"("ID","EMAIL","FIRST_NAME","LAST_NAME","PHONE_NUMBER")VALUES(?,?,?,?,?) [22018-214]
+2022-11-14 22:54:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (APP_USER: ""ID"" BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."APP_USER"("ID","EMAIL","FIRST_NAME","LAST_NAME","PHONE_NUMBER")VALUES(?,?,?,?,?) [22018-214]
