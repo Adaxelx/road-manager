@@ -1,5 +1,4 @@
 import "leaflet/dist/leaflet.css";
-import { Alert, Snackbar } from "@mui/material";
 import { LatLng } from "leaflet";
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -9,6 +8,7 @@ import { MapMarker } from "@features/RoadNetwork/components/MapMarker/MapMarker"
 import { RoadForm } from "@features/RoadNetwork/components/RoadNetworkView/RoadForm";
 import { RoadJunctionsTable } from "@features/RoadNetwork/components/RoadNetworkView/RoadJunctionsTable";
 import { RoadList } from "@features/RoadNetwork/components/RoadNetworkView/RoadList";
+import { Snackbar } from "@mui/material";
 
 interface MapConfig {
     mapCenter: [number, number];
@@ -30,6 +30,11 @@ export enum EditMode {
     ADD,
 }
 
+export interface SnackbarConfig {
+    isFormValid: boolean;
+    isSnackbarOpen: boolean;
+}
+
 interface RoadNetworkViewProps {
     roads: RoadDTO[];
     saveRoad: (road: RoadDTO, junctions: JunctionDTO[]) => Promise<void>;
@@ -39,6 +44,7 @@ export const RoadNetworkView = ({ roads, saveRoad }: RoadNetworkViewProps) => {
     const [junctions, setJunctions] = React.useState<JunctionDTO[]>([]);
 
     const [editMode, setEditMode] = React.useState<EditMode>(EditMode.NONE);
+    const [alert, setAlert] = React.useState();
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
     const handleAddRoadClick = () => {
@@ -47,9 +53,8 @@ export const RoadNetworkView = ({ roads, saveRoad }: RoadNetworkViewProps) => {
         setJunctions([]);
     };
 
-    const handleSaveRoadClick = (road: RoadDTO) => {
-        saveRoad(road, junctions).then(() => {
-            setSnackbarOpen(true);
+    const handleSaveRoadClick = (saveRoadDTO: RoadDTO) => {
+        saveRoad({ ...road, ...saveRoadDTO }, junctions).then(() => {
             setEditMode(EditMode.NONE);
         });
     };
@@ -118,6 +123,8 @@ export const RoadNetworkView = ({ roads, saveRoad }: RoadNetworkViewProps) => {
                     road={road}
                     junctions={junctions}
                     handleSaveRoadClick={handleSaveRoadClick}
+                    setAlert={setAlert}
+                    setSnackbarOpen={setSnackbarOpen}
                     table={
                         <RoadJunctionsTable
                             junctions={junctions}
@@ -153,13 +160,7 @@ export const RoadNetworkView = ({ roads, saveRoad }: RoadNetworkViewProps) => {
                 sx={{ width: "90%" }}
                 onClose={() => setSnackbarOpen(false)}
             >
-                <Alert
-                    onClose={() => setSnackbarOpen(false)}
-                    severity="success"
-                    sx={{ width: "100%" }}
-                >
-                    Pomyślna edycja drogi!
-                </Alert>
+                {alert}
             </Snackbar>
         </>
     );

@@ -110,7 +110,7 @@ export const RoadList = ({
                                             <AddIcon fontSize="inherit" />
                                         }
                                     >
-                                        Dodaj drogę
+                                        Dodaj sieć drogową
                                     </Button>
                                 </TableCell>
                             </TableRow>

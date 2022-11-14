@@ -1,6 +1,5 @@
 import { rest } from "msw";
-
-import { RoadNetworkDTO } from "@src/api";
+import { RoadDTO } from "@src/api";
 
 const roadsNetwork: any = {
     RoadDTOS: [
@@ -54,6 +53,16 @@ export const handlers = [
     rest.post(
         "https://someserver.swagger.io/api/v3/roadNetwork",
         (req, res, ctx) => {
+            const newRoadDTO: RoadDTO = req.body as RoadDTO;
+            if (newRoadDTO.id) {
+                roadsNetwork.RoadDTOS = roadsNetwork.RoadDTOS.map(
+                    (road: RoadDTO) =>
+                        road.id === newRoadDTO.id ? newRoadDTO : road
+                );
+            } else {
+                roadsNetwork.RoadDTOS.push(req.body);
+            }
+
             return res(ctx.json({}));
         }
     ),
