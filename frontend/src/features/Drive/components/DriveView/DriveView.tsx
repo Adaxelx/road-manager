@@ -20,7 +20,7 @@ export const DriveView = (props: DriveViewProps) => {
 
     const initialValues: VehicleDTO = {
         secondOwnerName: "",
-        registrationNumber: "dfgsdf",
+        registrationNumber: "",
         technicalID: "" || 0,
     };
 
