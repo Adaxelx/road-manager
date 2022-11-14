@@ -23,18 +23,18 @@ public class RoadSegment {
     @Column(nullable = false)
     private float length;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "start_junction_id", nullable = false)
     private Junction start;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "end_junction_id", nullable = false)
     private Junction end;
 
     @ManyToMany(mappedBy = "segments")
     private List<Road> roads;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "toll_id")
     private Toll toll;
 }

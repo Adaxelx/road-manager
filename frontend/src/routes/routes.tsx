@@ -1,13 +1,19 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { Layout } from "../shared/Layout/Layout";
-import { RoadNetwork } from "../features/RoadNetwork/routes/RoadNetwork";
-import { DriveP } from "../features/Drive/routes/Drive";
+
+import { OrangeThemeProvider } from "@src/providers/OrangeThemeProvider";
+import { NavHeader } from "@src/shared/Layout/components/NavHeader/NavHeader";
+import { Layout } from "@src/shared/Layout/Layout";
+import { DrivePresenter } from "@features/Drive/routes/DrivePresenter";
+import { Home } from "@features/Home/routes/Home";
+import { RoadNetworkPresenter } from "@features/RoadNetwork/routes/RoadNetworkPresenter";
 
 const App = () => {
     return (
-        <Layout>
-            <Outlet />
-        </Layout>
+        <OrangeThemeProvider>
+            <Layout>
+                <Outlet />
+            </Layout>
+        </OrangeThemeProvider>
     );
 };
 
@@ -16,10 +22,37 @@ export const routes = [
         path: "/app",
         element: <App />,
         children: [
-            { path: "road-network", element: <RoadNetwork /> },
-            { path: "drive", element: <DriveP /> },
-            { path: "*", element: <Navigate to="." /> },
+            {
+                path: "road-network",
+                element: (
+                    <>
+                        <NavHeader />
+                        <RoadNetworkPresenter />
+                    </>
+                ),
+            },
+            {
+                path: "drive",
+                element: (
+                    <>
+                        <NavHeader />
+                        <DrivePresenter />
+                    </>
+                ),
+            },
+            {
+                path: "home",
+                element: (
+                    <>
+                        <Home />
+                    </>
+                ),
+            },
+            {
+                path: "*",
+                element: <Navigate to="." />,
+            },
         ],
     },
-    { path: "*", element: <Navigate to="app/road-network" /> },
+    { path: "*", element: <Navigate to="/app/home" /> },
 ];
