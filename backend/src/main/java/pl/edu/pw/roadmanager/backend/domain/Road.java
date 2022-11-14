@@ -3,6 +3,7 @@ package pl.edu.pw.roadmanager.backend.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,9 +28,9 @@ public class Road {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private RoadType type;
+    private RoadTypeEnums type;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "road_road_segment_relation",
             joinColumns = @JoinColumn(name = "road_id"),

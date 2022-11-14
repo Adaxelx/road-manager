@@ -1,23 +1,23 @@
 package pl.edu.pw.roadmanager.backend.dto;
 
-import pl.edu.pw.roadmanager.backend.domain.Junction;
-import pl.edu.pw.roadmanager.backend.domain.Road;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.edu.pw.roadmanager.backend.domain.Toll;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import java.util.List;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoadSegmentDTO {
     private Long id;
 
     private float length;
 
-    private Junction start;
+    private JunctionDTO start;
 
-    private Junction end;
+    private JunctionDTO end;
 
     private Toll toll;
 }

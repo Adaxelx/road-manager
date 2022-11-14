@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.roadmanager.backend.domain.Road;
-import pl.edu.pw.roadmanager.backend.domain.RoadType;
+import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
 import pl.edu.pw.roadmanager.backend.dto.RoadDTO;
 import pl.edu.pw.roadmanager.backend.dto.RoadNetworkDTO;
 import pl.edu.pw.roadmanager.backend.repositories.RoadRepository;
@@ -27,8 +27,6 @@ public class RoadNetwork implements RoadNetworkAPI {
         }
 
         modelMapper.map(roadDTO, road);
-        // TODO: Temporary, mapper casts type (enum) to null, ps. don't write code like this below
-        road.setType(RoadType.values()[(RoadType.values().length > roadDTO.getType() && roadDTO.getType() > 0) ? roadDTO.getType() : 0]);
 
         roadRepository.save(road);
     }
