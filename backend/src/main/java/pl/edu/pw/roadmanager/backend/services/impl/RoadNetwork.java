@@ -3,6 +3,7 @@ package pl.edu.pw.roadmanager.backend.services.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.domain.Road;
 import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
 import pl.edu.pw.roadmanager.backend.dto.RoadDTO;
@@ -23,7 +24,7 @@ public class RoadNetwork implements RoadNetworkAPI {
     public void addOrEditRoad(RoadDTO roadDTO) {
         Road road = new Road();
         if (roadDTO.getId() != null) {
-            road = roadRepository.findById(roadDTO.getId()).orElseThrow();
+            road = roadRepository.findById(roadDTO.getId()).orElseThrow(() -> new NotFoundException("Road not found"));
         }
 
         modelMapper.map(roadDTO, road);
