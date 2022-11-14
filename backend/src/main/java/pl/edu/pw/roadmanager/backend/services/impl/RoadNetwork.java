@@ -25,7 +25,7 @@ public class RoadNetwork implements RoadNetworkAPI {
         if (roadDTO.getId() != null) {
             road = roadRepository.findById(roadDTO.getId()).orElseThrow();
         }
-        
+
         modelMapper.map(roadDTO, road);
         // TODO: Temporary, mapper casts type (enum) to null, ps. don't write code like this below
         road.setType(RoadType.values()[(RoadType.values().length > roadDTO.getType() && roadDTO.getType() > 0) ? roadDTO.getType() : 0]);
