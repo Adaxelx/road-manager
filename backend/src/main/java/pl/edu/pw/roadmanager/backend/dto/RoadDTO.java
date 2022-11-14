@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.edu.pw.roadmanager.backend.domain.RoadSegment;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +21,6 @@ public class RoadDTO {
     private String name;
 
     private int type;
+
+    private List<RoadSegmentDTO> segments;
 }
