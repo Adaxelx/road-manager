@@ -1,10 +1,9 @@
-import * as React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { routes } from "@src/routes/routes";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-interface AppProviderProps {
-    children: React.ReactNode;
-}
 
-export const AppProvider = ({ children }: AppProviderProps) => {
-    return <Router>{children}</Router>;
+export const AppProvider = () => {
+    const router = createBrowserRouter(routes)
+
+    return <RouterProvider router={router} />;
 };
