@@ -20,3 +20,15 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\00
         phone_number varchar(255),
         primary key (id)
     ) [42001-214]
+2022-11-14 21:10:02 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER ([*]1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789')"; expected "identifier"; SQL statement:
+INSERT INTO APP_USER (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789') [42001-214]
+2022-11-14 21:10:20 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER [*]VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789')"; expected "., (, OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, SORTED, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO APP_USER VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789') [42001-214]
+2022-11-14 21:11:30 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER [*]VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789')"; expected "., (, OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, SORTED, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO APP_USER VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789') [42001-214]
+2022-11-14 21:11:34 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER [*]VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789')"; expected "., (, OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, SORTED, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO APP_USER VAUES (1, 'jkowalski@example.com', 'Jan', 'Kowalski', '123456789') [42001-214]
