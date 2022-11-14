@@ -17,10 +17,13 @@ export const RoadNetworkPresenter = () => {
     });
 
     useEffect(() => {
+        loadRoadNetwork();
+    }, []);
+
+    const loadRoadNetwork = async () =>
         roadNetworkApi
             .getRoadNetwork()
             .then((network: RoadNetworkDTO) => setRoadNetwork(network));
-    }, []);
 
     const saveRoad = async (
         road: RoadDTO,
@@ -30,8 +33,9 @@ export const RoadNetworkPresenter = () => {
             ...road,
             segments: createSegments(junctions),
         };
-        console.log(requestRoad);
-        return roadNetworkApi.addOrEditRoad(requestRoad);
+        return roadNetworkApi
+            .addOrEditRoad(requestRoad)
+            .then(() => loadRoadNetwork());
     };
 
     const createSegments = (junctions: JunctionDTO[]): RoadSegmentDTO[] => {

@@ -22,6 +22,8 @@ interface RoadFormProps {
     table: any;
     editMode: EditMode;
     junctions: JunctionDTO[];
+    setSnackbarOpen: (isOpen: boolean) => void;
+    setAlert: (alert: any) => void;
 }
 
 export const RoadForm = ({
@@ -30,9 +32,31 @@ export const RoadForm = ({
     table,
     editMode,
     junctions,
+    setAlert,
+    setSnackbarOpen,
 }: RoadFormProps) => {
     const [errorNodeNumber, setErrorNodeNumber] =
         React.useState<boolean>(false);
+
+    const errorAlert = (
+        <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="error"
+            sx={{ width: "100%" }}
+        >
+            Błędnie wypełniony formularz
+        </Alert>
+    );
+
+    const successAlert = (
+        <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="success"
+            sx={{ width: "100%" }}
+        >
+            Sieć drogowa została zapisana
+        </Alert>
+    );
 
     const validationSchema = object().shape({
         name: string().required(),
@@ -52,9 +76,13 @@ export const RoadForm = ({
         onSubmit: (values) => {
             if (junctions.length < 2) {
                 setErrorNodeNumber(true);
+                setAlert(errorAlert);
                 return;
+            } else {
+                setAlert(successAlert);
             }
 
+            setSnackbarOpen(true);
             setErrorNodeNumber(false);
             handleSaveRoadClick(values);
         },
@@ -63,7 +91,9 @@ export const RoadForm = ({
     return (
         <Box sx={{ mt: 2, mb: 6 }}>
             <h2 style={{ textAlign: "left" }}>
-                {editMode === EditMode.EDIT ? " Edytuj drogę" : "Dodaj drogę"}
+                {editMode === EditMode.EDIT
+                    ? " Edytuj sieć drogową"
+                    : "Dodaj sieć drogową"}
             </h2>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
@@ -121,8 +151,12 @@ export const RoadForm = ({
                     type="submit"
                     variant="contained"
                     size="large"
+                    onClick={() => {
+                        setAlert(errorAlert);
+                        setSnackbarOpen(true);
+                    }}
                 >
-                    Zapisz drogę
+                    Zapisz
                 </Button>
             </form>
         </Box>
