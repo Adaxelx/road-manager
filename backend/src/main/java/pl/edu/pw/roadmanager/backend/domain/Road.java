@@ -30,7 +30,7 @@ public class Road {
     @Column(name = "type", nullable = false)
     private RoadTypeEnums type;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "road_road_segment_relation",
             joinColumns = @JoinColumn(name = "road_id"),
