@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.domain.Road;
-import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
 import pl.edu.pw.roadmanager.backend.dto.RoadDTO;
 import pl.edu.pw.roadmanager.backend.dto.RoadNetworkDTO;
 import pl.edu.pw.roadmanager.backend.repositories.RoadRepository;
@@ -28,6 +27,12 @@ public class RoadNetwork implements RoadNetworkAPI {
         }
 
         modelMapper.map(roadDTO, road);
+        //TODO: Tymczasowo usuwamy id RoadSegment'ow oraz id Junction, bo sa generowane automatycznie.
+        road.getSegments().forEach(s -> {
+            s.setId(null);
+            s.getStart().setId(null);
+            s.getEnd().setId(null);
+        });
         roadRepository.save(road);
     }
 

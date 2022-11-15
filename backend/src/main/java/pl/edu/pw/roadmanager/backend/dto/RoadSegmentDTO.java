@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pw.roadmanager.backend.domain.Toll;
 
 @Getter
 @Setter
@@ -18,6 +17,4 @@ public class RoadSegmentDTO {
     private JunctionDTO start;
 
     private JunctionDTO end;
-
-    private Toll toll;
 }
