@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-export const BASE_PATH = "https://someserver.swagger.io/api/v3".replace(
+export const BASE_PATH = "http://localhost:8080".replace(
     /\/+$/,
     ""
 );

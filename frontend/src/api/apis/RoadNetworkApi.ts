@@ -97,7 +97,7 @@ export class RoadNetworkApi extends runtime.BaseAPI {
         );
 
         return new runtime.JSONApiResponse(response, (jsonValue) =>
-            RoadNetworkDTOFromJSON(jsonValue)
+            jsonValue
         );
     }
 

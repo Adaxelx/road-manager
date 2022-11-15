@@ -1,5 +1,6 @@
 package pl.edu.pw.roadmanager.backend.services.impl;
 
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,8 @@ public class RoadNetwork implements RoadNetworkAPI {
 
     @Override
     public RoadNetworkDTO getRoadNetwork() {
-        RoadNetworkDTO roadNetworkDTO = modelMapper.map(roadRepository.findById(1L), RoadNetworkDTO.class);
+        List<RoadDTO> roadDtos = roadRepository.findAll().stream().map(road -> modelMapper.map(road, RoadDTO.class)).toList();
 
-        return roadNetworkDTO;
+        return new RoadNetworkDTO(roadDtos);
     }
 }

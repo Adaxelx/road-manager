@@ -82,6 +82,7 @@ export const RoadNetworkView = ({ roads, saveRoad }: RoadNetworkViewProps) => {
         setJunctions([
             ...junctions,
             {
+                name: "",
                 latitude: mapConfig.mapCenter[0],
                 longitude: mapConfig.mapCenter[1],
             },
