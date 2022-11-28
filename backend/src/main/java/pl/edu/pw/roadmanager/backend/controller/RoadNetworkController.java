@@ -34,7 +34,7 @@ public class RoadNetworkController {
             @ApiResponse(responseCode = "404", description = "Road with given id does not exist in DB",
                     content = @Content) })
     @PostMapping("/roadNetwork")
-    public ResponseEntity<?> createOrUpdateRoad(@Valid @RequestBody RoadDTO roadDTO) {
+    public ResponseEntity<?> addOrEditRoad(@Valid @RequestBody RoadDTO roadDTO) {
         try {
             roadNetworkAPI.addOrEditRoad(roadDTO);
         } catch (NotFoundException e) {

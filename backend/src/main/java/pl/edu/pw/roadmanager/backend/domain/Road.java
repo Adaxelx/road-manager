@@ -1,15 +1,14 @@
 package pl.edu.pw.roadmanager.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "road")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,7 +29,7 @@ public class Road {
     @Column(name = "type", nullable = false)
     private RoadTypeEnums type;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "road_road_segment_relation",
             joinColumns = @JoinColumn(name = "road_id"),

@@ -1,14 +1,13 @@
 package pl.edu.pw.roadmanager.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "road_segment")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,18 +22,18 @@ public class RoadSegment {
     @Column(nullable = false)
     private float length;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "start_junction_id", nullable = false)
     private Junction start;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "end_junction_id", nullable = false)
     private Junction end;
 
     @ManyToMany(mappedBy = "segments")
     private List<Road> roads;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "toll_id")
     private Toll toll;
 }

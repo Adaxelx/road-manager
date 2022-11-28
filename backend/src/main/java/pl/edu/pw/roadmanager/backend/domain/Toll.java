@@ -2,14 +2,13 @@ package pl.edu.pw.roadmanager.backend.domain;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "toll")
 @AllArgsConstructor
 @NoArgsConstructor
