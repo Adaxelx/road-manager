@@ -39,7 +39,7 @@ public class RoadNetwork implements RoadNetworkAPI {
         Road road = new Road();
         List<RoadSegment> roadSegments = new ArrayList<>();
         if (roadDTO.getId() != null) {
-            road = roadRepository.findById(roadDTO.getId()).orElseThrow(() -> new NotFoundException("Road not found"));
+            road = roadRepository.findById(roadDTO.getId()).orElseThrow(() -> new NotFoundException("Road not found."));
         }
 
         road.setCode(roadDTO.getCode());
@@ -52,13 +52,13 @@ public class RoadNetwork implements RoadNetworkAPI {
             Junction end = new Junction();
 
             if (s.getId() != null) {
-                roadSegment = roadSegmentRepository.findById(s.getId()).orElseThrow(() -> new NotFoundException("Road segment not found"));
+                roadSegment = roadSegmentRepository.findById(s.getId()).orElseThrow(() -> new NotFoundException("Road segment not found."));
             }
             if (s.getStart().getId() != null) {
-                start = junctionRepository.findById(s.getStart().getId()).orElseThrow(() -> new NotFoundException("Segments start junction not found"));
+                start = junctionRepository.findById(s.getStart().getId()).orElseThrow(() -> new NotFoundException("Segments start junction not found."));
             }
             if (s.getEnd().getId() != null) {
-                end = junctionRepository.findById(s.getEnd().getId()).orElseThrow(() -> new NotFoundException("Segments end junction not found"));
+                end = junctionRepository.findById(s.getEnd().getId()).orElseThrow(() -> new NotFoundException("Segments end junction not found."));
             }
 
             modelMapper.map(s.getStart(), start);

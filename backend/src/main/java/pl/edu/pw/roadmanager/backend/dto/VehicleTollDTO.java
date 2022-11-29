@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
+import pl.edu.pw.roadmanager.backend.enums.VehicleType;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TollDTO {
-    private Long id;
+public class VehicleTollDTO {
+    private long id;
 
-    private String name;
+    private float pricePerKilometer;
 
-    private List<VehicleTollDTO> vehicleTollDTOS;
+    private VehicleType vehicleType;
 }

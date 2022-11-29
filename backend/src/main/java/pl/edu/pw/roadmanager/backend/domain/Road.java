@@ -1,7 +1,7 @@
 package pl.edu.pw.roadmanager.backend.domain;
 
 import lombok.*;
-import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
+import pl.edu.pw.roadmanager.backend.enums.RoadType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,7 +27,7 @@ public class Road {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private RoadTypeEnums type;
+    private RoadType type;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinTable(

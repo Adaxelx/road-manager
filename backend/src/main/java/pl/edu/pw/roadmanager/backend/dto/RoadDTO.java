@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
+import pl.edu.pw.roadmanager.backend.enums.RoadType;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class RoadDTO {
 
     private String name;
 
-    private RoadTypeEnums type;
+    private RoadType type;
 
     private List<RoadSegmentDTO> segments;
 }

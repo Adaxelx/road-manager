@@ -1,6 +1,6 @@
 package pl.edu.pw.roadmanager.backend.enums;
 
-public enum RoadTypeEnums {
+public enum RoadType {
     HIGHWAY,
     NATIONAL_ROAD,
     VOIVODESHIP_ROAD

@@ -26,12 +26,12 @@ public class RoadNetworkController {
     @Operation(summary = "Create or update road. When road's id == null, system creates new road." +
             "Otherwise system gets road from DB with id == road.id and updates all fields.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Road successfully created or update ",
+            @ApiResponse(responseCode = "200", description = "Road successfully created or updated.",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RoadDTO.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid data",
+            @ApiResponse(responseCode = "400", description = "Invalid data.",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Road with given id does not exist in DB",
+            @ApiResponse(responseCode = "404", description = "Road with given id does not exist in DB.",
                     content = @Content) })
     @PostMapping("/roadNetwork")
     public ResponseEntity<?> addOrEditRoad(@Valid @RequestBody RoadDTO roadDTO) {
