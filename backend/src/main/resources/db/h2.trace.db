@@ -38,3 +38,6 @@ INSERT INTO "PUBLIC"."APP_USER"("ID","EMAIL","FIRST_NAME","LAST_NAME","PHONE_NUM
 2022-11-14 22:54:30 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (APP_USER: ""ID"" BIGINT NOT NULL)"; SQL statement:
 INSERT INTO "PUBLIC"."APP_USER"("ID","EMAIL","FIRST_NAME","LAST_NAME","PHONE_NUMBER")VALUES(?,?,?,?,?) [22018-214]
+2022-12-03 16:11:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM PASSAGE TOLL [*]VEHICLE VEHICLE_TOLL"; SQL statement:
+SELECT * FROM PASSAGE TOLL VEHICLE VEHICLE_TOLL [42000-214]
