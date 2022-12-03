@@ -22,9 +22,9 @@ public class Toll {
     @Column(name = "name", updatable = true)
     private String name;
 
-    @Column(name = "price_per_kilometer", updatable = true)
-    private float pricePerKilometer;
-
     @OneToMany(mappedBy = "toll", cascade = { CascadeType.ALL })
     private List<RoadSegment> segments;
+
+    @OneToMany(mappedBy = "toll", cascade = { CascadeType.ALL })
+    private List<VehicleToll> vehicleTolls;
 }
