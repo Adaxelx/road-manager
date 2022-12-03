@@ -15,8 +15,8 @@ import java.util.List;
 public class Road {
 
     @Id
-    @SequenceGenerator(name = "junction_sequence", sequenceName = "junction_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "junction_sequence")
+    @SequenceGenerator(name = "road_sequence", sequenceName = "road_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "road_sequence")
     @Column(name = "id", updatable = false)
     private Long id;
 

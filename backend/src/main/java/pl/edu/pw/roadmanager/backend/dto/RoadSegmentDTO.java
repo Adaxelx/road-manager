@@ -17,4 +17,6 @@ public class RoadSegmentDTO {
     private JunctionDTO start;
 
     private JunctionDTO end;
+
+    private Long toolId;
 }

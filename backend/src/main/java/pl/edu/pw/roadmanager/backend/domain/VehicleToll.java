@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pw.roadmanager.backend.enums.RoadTypeEnums;
+import pl.edu.pw.roadmanager.backend.enums.VehicleType;
 
 import javax.persistence.*;
 
@@ -26,9 +26,9 @@ public class VehicleToll {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private RoadTypeEnums type;
+    private VehicleType type;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "toll_id")
     private Toll toll;
 }

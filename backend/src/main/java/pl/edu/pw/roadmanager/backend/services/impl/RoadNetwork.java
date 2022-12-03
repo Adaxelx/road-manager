@@ -8,11 +8,13 @@ import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.domain.Junction;
 import pl.edu.pw.roadmanager.backend.domain.Road;
 import pl.edu.pw.roadmanager.backend.domain.RoadSegment;
+import pl.edu.pw.roadmanager.backend.domain.Toll;
 import pl.edu.pw.roadmanager.backend.dto.RoadDTO;
 import pl.edu.pw.roadmanager.backend.dto.RoadNetworkDTO;
 import pl.edu.pw.roadmanager.backend.repositories.JunctionRepository;
 import pl.edu.pw.roadmanager.backend.repositories.RoadRepository;
 import pl.edu.pw.roadmanager.backend.repositories.RoadSegmentRepository;
+import pl.edu.pw.roadmanager.backend.repositories.TollRepository;
 import pl.edu.pw.roadmanager.backend.services.RoadNetworkAPI;
 
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class RoadNetwork implements RoadNetworkAPI {
 
     @Autowired
     private JunctionRepository junctionRepository;
+
+    @Autowired
+    private TollRepository tollRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -50,6 +55,7 @@ public class RoadNetwork implements RoadNetworkAPI {
             RoadSegment roadSegment = new RoadSegment();
             Junction start = new Junction();
             Junction end = new Junction();
+            Toll toll;
 
             if (s.getId() != null) {
                 roadSegment = roadSegmentRepository.findById(s.getId()).orElseThrow(() -> new NotFoundException("Road segment not found."));
@@ -59,6 +65,10 @@ public class RoadNetwork implements RoadNetworkAPI {
             }
             if (s.getEnd().getId() != null) {
                 end = junctionRepository.findById(s.getEnd().getId()).orElseThrow(() -> new NotFoundException("Segments end junction not found."));
+            }
+            if (s.getToolId() != null) {
+                toll = tollRepository.findById(s.getToolId()).orElseThrow(() -> new NotFoundException("Segments end junction not found."));
+                roadSegment.setToll(toll);
             }
 
             modelMapper.map(s.getStart(), start);

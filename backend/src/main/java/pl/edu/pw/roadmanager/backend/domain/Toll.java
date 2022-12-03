@@ -22,9 +22,9 @@ public class Toll {
     @Column(name = "name", updatable = true)
     private String name;
 
-    @OneToMany(mappedBy = "toll", cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "toll", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.LAZY)
     private List<RoadSegment> segments;
 
-    @OneToMany(mappedBy = "toll", cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "toll", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.LAZY)
     private List<VehicleToll> vehicleTolls;
 }

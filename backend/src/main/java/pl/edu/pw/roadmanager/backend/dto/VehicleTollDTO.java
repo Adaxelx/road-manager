@@ -11,7 +11,7 @@ import pl.edu.pw.roadmanager.backend.enums.VehicleType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleTollDTO {
-    private long id;
+    private Long id;
 
     private float pricePerKilometer;
 
