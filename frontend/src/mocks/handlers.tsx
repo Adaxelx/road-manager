@@ -11,10 +11,12 @@ const roadsNetwork: any = {
             segments: [
                 {
                     start: {
+                        id: 1,
                         latitude: 51.941,
                         longitude: 19.0945,
                     },
                     end: {
+                        id: 2,
                         latitude: 51.931,
                         longitude: 19.1945,
                     },
@@ -29,10 +31,12 @@ const roadsNetwork: any = {
             segments: [
                 {
                     start: {
+                        id: 3,
                         latitude: 52.941,
                         longitude: 11.0945,
                     },
                     end: {
+                        id: 4,
                         latitude: 51.931,
                         longitude: 11.1945,
                     },

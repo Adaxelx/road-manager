@@ -20,6 +20,11 @@ export const Home = () => {
                     title="Rejestr pojazdów"
                     icon="/drive.svg"
                 />
+                <HomeButton
+                    href="/app/payments"
+                    title="Opłaty"
+                    icon="/drive.svg"
+                />
             </Grid>
         </Stack>
     );
