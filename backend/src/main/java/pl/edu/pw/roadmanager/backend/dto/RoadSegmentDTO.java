@@ -4,23 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pw.roadmanager.backend.enums.RoadType;
-
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoadDTO {
-
+public class RoadSegmentDTO {
     private Long id;
 
-    private String code;
+    private float length;
 
-    private String name;
+    private JunctionDTO start;
 
-    private RoadType type;
+    private JunctionDTO end;
 
-    private List<RoadSegmentDTO> segments;
+    private Long toolId;
 }

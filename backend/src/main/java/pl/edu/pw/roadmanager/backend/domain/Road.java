@@ -1,22 +1,22 @@
 package pl.edu.pw.roadmanager.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import pl.edu.pw.roadmanager.backend.enums.RoadType;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "road")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Road {
 
     @Id
-    @SequenceGenerator(name = "junction_sequence", sequenceName = "junction_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "junction_sequence")
+    @SequenceGenerator(name = "road_sequence", sequenceName = "road_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "road_sequence")
     @Column(name = "id", updatable = false)
     private Long id;
 
@@ -25,10 +25,11 @@ public class Road {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private RoadType type;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "road_road_segment_relation",
             joinColumns = @JoinColumn(name = "road_id"),
