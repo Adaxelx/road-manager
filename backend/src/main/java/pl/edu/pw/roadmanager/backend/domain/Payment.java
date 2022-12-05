@@ -23,7 +23,7 @@ public class Payment {
     private Boolean paid;
 
     @Column(name = "price", nullable = false)
-    private Boolean price;
+    private float price;
 
     @OneToOne(mappedBy = "payment")
     private Passage passage;

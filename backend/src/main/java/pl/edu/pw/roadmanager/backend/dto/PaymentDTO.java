@@ -15,7 +15,7 @@ public class PaymentDTO {
 
     private Boolean paid;
 
-    private Boolean price;
+    private float price;
 
     private Passage passage;
 }
