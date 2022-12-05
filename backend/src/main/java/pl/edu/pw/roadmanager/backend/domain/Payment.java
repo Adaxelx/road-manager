@@ -22,6 +22,9 @@ public class Payment {
     @Column(name = "paid", nullable = false)
     private Boolean paid;
 
+    @Column(name = "price", nullable = false)
+    private Boolean price;
+
     @OneToOne(mappedBy = "payment")
     private Passage passage;
 }
