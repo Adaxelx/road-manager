@@ -1,14 +1,12 @@
 package pl.edu.pw.roadmanager.backend.services.impl;
 
-import com.sun.xml.bind.v2.TODO;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pw.roadmanager.backend.domain.Junction;
-import pl.edu.pw.roadmanager.backend.domain.Passage;
-import pl.edu.pw.roadmanager.backend.domain.Vehicle;
+import pl.edu.pw.roadmanager.backend.domain.*;
 import pl.edu.pw.roadmanager.backend.dto.PassageDTO;
+import pl.edu.pw.roadmanager.backend.enums.VehicleType;
 import pl.edu.pw.roadmanager.backend.repositories.*;
 import pl.edu.pw.roadmanager.backend.services.SensorAPI;
 
@@ -38,23 +36,44 @@ public class Sensor implements SensorAPI {
     @Override
     public int registerPassage(PassageDTO passageDTO) {
         Vehicle registeredVehicle = getVehicleByRegistrationNumber(passageDTO.getRegistrationNumber());
+        if (registeredVehicle == null) {
+            return 400;
+        }
         passageDTO.setVehicle(registeredVehicle);
 
         Junction junction = getJunctionByLocation(passageDTO.getLongitude(), passageDTO.getLatitude());
+        if (junction == null) {
+            return 400;
+        }
 
         List<Passage> passages = getVehiclesPassagesWithoutPayment(passageDTO.getRegistrationNumber());
 
         Passage passage = new Passage();
         if (passages.size() == 1) {
-            // TODO: 12/5/2022 clean this if
             passage = passages.get(0);
             passage.setEnd(junction);
-            Passage finalPassage = passage;
-            roadSegmentRepository.findAll()
+            RoadSegment roadSegment = getRoadSegmentByJunctions(passage);
+            if (roadSegment == null) {
+                return 400;
+            }
+            List<VehicleToll> tolls = roadSegment.getToll()
+                    .getVehicleTolls()
                     .stream()
-                    .filter(rs ->sameRoadSegments(rs.getStart(), rs.getEnd(), finalPassage.getStart(), finalPassage.getEnd()))
+                    .filter(t -> t.getType().equals(VehicleType.valueOf("CAR")))
                     .toList();
-        } else if (passages.size() == 0) {
+            if (tolls.size() == 1) {
+                return 400;
+            }
+            float price = roadSegment.getLength() * tolls.get(0).getPricePerKilometer();
+            Payment payment = new Payment();
+            payment.setPassage(passage);
+            payment.setPaid(false);
+            payment.setPrice(price);
+            passage.setPayment(payment);
+            paymentRepository.save(payment);
+            modelMapper.map(passageDTO, passage);
+            passageRepository.save(passage);
+        } else if (passages.isEmpty()) {
             passageDTO.setStart(junction);
             modelMapper.map(passageDTO, passage);
             passageRepository.save(passage);
@@ -64,9 +83,28 @@ public class Sensor implements SensorAPI {
         return 200;
     }
 
-    // TODO: 12/5/2022 end creating this method
-    private boolean sameRoadSegments(Junction rsStart, Junction rsEnd, Junction pStart, Junction pEnd){
+    private RoadSegment getRoadSegmentByJunctions(Passage passage) {
+        List<RoadSegment> roadSegments = roadSegmentRepository.findAll()
+                .stream()
+                .filter(rs -> sameRoadSegments(rs.getStart(), rs.getEnd(), passage.getStart(), passage.getEnd()))
+                .toList();
+        if (roadSegments.size() != 1) {
+            return null;
+        }
+        return roadSegments.get(0);
+    }
 
+    private boolean sameRoadSegments(Junction rsStart, Junction rsEnd, Junction pStart, Junction pEnd) {
+        if (sameJunction(rsStart, pStart)) {
+            return sameJunction(rsEnd, pEnd);
+        } else if (sameJunction(rsEnd, pStart)) {
+            return sameJunction(rsStart, pEnd);
+        }
+        return false;
+    }
+
+    private boolean sameJunction(Junction a, Junction b) {
+        return a.getLongitude() == b.getLongitude() && a.getLatitude() == b.getLatitude();
     }
 
     private List<Passage> getVehiclesPassagesWithoutPayment(String registrationNumber) {
