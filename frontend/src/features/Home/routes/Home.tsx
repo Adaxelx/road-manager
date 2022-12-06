@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss";
 import { Grid } from "@mui/material";
 import { Stack } from "@mui/system";
+import styles from "./styles.module.scss";
 
 import { HomeButton } from "@features/Home/components/HomeButton/HomeButton";
 
@@ -19,6 +19,11 @@ export const Home = () => {
                     href="/app/drive"
                     title="Rejestr pojazdów"
                     icon="/drive.svg"
+                />
+                <HomeButton
+                    href="/app/payment-toll"
+                    title="Taryfikatory"
+                    icon="/toll.svg"
                 />
             </Grid>
         </Stack>
