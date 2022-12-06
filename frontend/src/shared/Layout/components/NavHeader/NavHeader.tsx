@@ -18,6 +18,9 @@ export const NavHeader = () => {
                         <Link to="/app/drive">
                             <Button>Rejestr pojazdów</Button>
                         </Link>
+                        <Link to="/app/payment-toll">
+                            <Button>Taryfikatory</Button>
+                        </Link>
                     </Box>
                 </Toolbar>
             </Container>
