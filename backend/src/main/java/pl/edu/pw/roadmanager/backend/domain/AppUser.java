@@ -32,7 +32,7 @@ public class AppUser {
     @Column(name = "phone_number", updatable = true)
     private String phoneNumber;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "app_user_vehicle_relation",
             joinColumns = @JoinColumn(name = "app_user_id"),

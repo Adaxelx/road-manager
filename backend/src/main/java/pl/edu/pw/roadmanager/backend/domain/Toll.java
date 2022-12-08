@@ -2,14 +2,13 @@ package pl.edu.pw.roadmanager.backend.domain;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "toll")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,9 +22,9 @@ public class Toll {
     @Column(name = "name", updatable = true)
     private String name;
 
-    @Column(name = "price_per_kilometer", updatable = true)
-    private float pricePerKilometer;
-
-    @OneToMany(mappedBy = "toll")
+    @OneToMany(mappedBy = "toll", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.LAZY)
     private List<RoadSegment> segments;
+
+    @OneToMany(mappedBy = "toll", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.LAZY)
+    private List<VehicleToll> vehicleTolls;
 }
