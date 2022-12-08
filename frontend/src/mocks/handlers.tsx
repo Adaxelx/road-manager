@@ -48,6 +48,13 @@ const roadsNetwork: any = {
 
 export const handlers = [
     rest.get(
+        "http://127.0.0.1:5173/src/api/apis/PaymentTollApi",
+        (req, res, ctx) => {
+            return res(ctx.json({}));
+        }
+    ),
+
+    rest.get(
         "https://someserver.swagger.io/api/v3/roadNetwork",
         (req, res, ctx) => {
             return res(ctx.json(roadsNetwork));

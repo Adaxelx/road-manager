@@ -1,21 +1,21 @@
-import { DriveApi, VehicleDTO } from "@src/api";
-import React from "react";
 import { DriveView } from "../components/DriveView/DriveView";
+import React from "react";
 
+import { DriveControllerApi, VehicleDTO } from "@src/api";
 
 export const DrivePresenter = () => {
-    const [succMsg, setSuccMsg] = React.useState<boolean | undefined>(undefined);
+    const [succMsg, setSuccMsg] = React.useState<boolean | undefined>(
+        undefined
+    );
 
     const submit = async (v: VehicleDTO) => {
-        await saveVehicle(v).then(
-            () => setSuccMsg(true)
-        ).catch(
-            () => setSuccMsg(false)
-        );
+        await saveVehicle(v)
+            .then(() => setSuccMsg(true))
+            .catch(() => setSuccMsg(false));
     };
 
     const saveVehicle = async (v: VehicleDTO) => {
-        return await (new DriveApi().registerVehicle(v));
+        return await new DriveControllerApi().registerVehicle(v);
     };
 
     const displayForm = () => {

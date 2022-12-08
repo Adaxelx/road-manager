@@ -4,14 +4,15 @@ import { useEffect } from "react";
 import {
     JunctionDTO,
     RoadDTO,
-    RoadNetworkApi,
+    RoadNetworkControllerApi,
     RoadNetworkDTO,
     RoadSegmentDTO,
 } from "@src/api";
 import { RoadNetworkView } from "@features/RoadNetwork/components/RoadNetworkView/RoadNetworkView";
 
 export const RoadNetworkPresenter = () => {
-    const roadNetworkApi: RoadNetworkApi = new RoadNetworkApi();
+    const roadNetworkApi: RoadNetworkControllerApi =
+        new RoadNetworkControllerApi();
     const [roadNetwork, setRoadNetwork] = React.useState<RoadNetworkDTO>({
         roadDTOS: [],
     });
