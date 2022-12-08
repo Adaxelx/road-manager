@@ -10,26 +10,30 @@ export const Home = () => {
             <img src="/logo.svg" width={64} />
 
             <Grid container justifyContent="center" gap={1}>
-                <HomeButton
-                    href="/app/road-network"
-                    title="Sieć drogowa"
-                    icon="/road_network.svg"
-                />
-                <HomeButton
-                    href="/app/drive"
-                    title="Rejestr pojazdów"
-                    icon="/drive.svg"
-                />
-                <HomeButton
-                    href="/app/payments"
-                    title="Opłaty"
-                    icon="/drive.svg"
-                />
-                <HomeButton
-                    href="/app/payment-toll"
-                    title="Taryfikatory"
-                    icon="/toll.svg"
-                />
+                <Grid container justifyContent='center' gap={1}>
+                    <HomeButton
+                        href="/app/road-network"
+                        title="Sieć drogowa"
+                        icon="/road_network.svg"
+                    />
+                    <HomeButton
+                        href="/app/drive"
+                        title="Rejestr pojazdów"
+                        icon="/drive.svg"
+                    />
+                </Grid>
+                <Grid container justifyContent='center' gap={1}>
+                    <HomeButton
+                        href="/app/payments"
+                        title="Opłaty"
+                        icon="/drive.svg"
+                    />
+                    <HomeButton
+                        href="/app/payment-toll"
+                        title="Taryfikatory"
+                        icon="/toll.svg"
+                    />
+                </Grid>
             </Grid>
         </Stack>
     );
