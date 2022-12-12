@@ -1,10 +1,9 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
-import { VehicleTollDTO, VehicleType } from "@src/api/models/VehicleTollDTO"
+import {VehicleTollDTO, VehicleTollDTOVehicleTypeEnum} from "@src/api/models/VehicleTollDTO"
 
 type PaymentTollEditVehicleTollItemProps = {
 	vehicleToll: VehicleTollDTO
-	handleVehicleTollNameChange: (vt: VehicleTollDTO, newName: string) => void
-	handleVehicleTollTypeChange: (vt: VehicleTollDTO, newType: VehicleType) => void
+	handleVehicleTollTypeChange: (vt: VehicleTollDTO, newType: VehicleTollDTOVehicleTypeEnum) => void
 	handleVehicleTollPriceChange: (vt: VehicleTollDTO, newPrice: number) => void
 	handleVehicleTollDelete: (vt: VehicleTollDTO) => void
 	index: number
@@ -12,7 +11,6 @@ type PaymentTollEditVehicleTollItemProps = {
 //VehicleType
 export const PaymentTollEditVehicleTollItem: React.FC<PaymentTollEditVehicleTollItemProps> = ({
 	vehicleToll,
-	handleVehicleTollNameChange,
 	handleVehicleTollTypeChange,
 	handleVehicleTollPriceChange,
 	handleVehicleTollDelete,
@@ -30,14 +28,6 @@ export const PaymentTollEditVehicleTollItem: React.FC<PaymentTollEditVehicleToll
 			}}>
 				#{index}
 			</Box>
-			<Box flexGrow={3}>
-				<TextField
-					fullWidth
-					label="Nazwa taryfy"
-					value={vehicleToll.name}
-					onChange={(e) => handleVehicleTollNameChange(vehicleToll, e.target.value)}
-				/>
-			</Box>
 			<Box flexGrow={1}>
 				<FormControl fullWidth>
 					<InputLabel id="type-label">Typ pojazdu</InputLabel>
@@ -45,10 +35,10 @@ export const PaymentTollEditVehicleTollItem: React.FC<PaymentTollEditVehicleToll
 						labelId="type-label"
 						label="Typ pojazdu"
 						value={vehicleToll.vehicleType}
-						onChange={(e) => handleVehicleTollTypeChange(vehicleToll, e.target.value as VehicleType)}
+						onChange={(e) => handleVehicleTollTypeChange(vehicleToll, e.target.value as VehicleTollDTOVehicleTypeEnum)}
 					>
 						{
-							Object.values(VehicleType).map(vehicleType =>
+							Object.values(VehicleTollDTOVehicleTypeEnum).map(vehicleType =>
 								<MenuItem key={vehicleType} value={vehicleType}>
 									{vehicleType}
 								</MenuItem>
