@@ -59,10 +59,10 @@ public class Sensor implements SensorAPI {
             List<VehicleToll> tolls = roadSegment.getToll()
                     .getVehicleTolls()
                     .stream()
-                    .filter(t -> t.getType().equals(VehicleType.valueOf("CAR")))
+                    .filter(t -> t.getType().equals(VehicleType.CAR))
                     .toList();
-            if (tolls.size() == 1) {
-                return 400;
+            if (tolls.size() != 1) {
+                return 403;
             }
             float price = roadSegment.getLength() * tolls.get(0).getPricePerKilometer();
             Payment payment = new Payment();
@@ -71,7 +71,6 @@ public class Sensor implements SensorAPI {
             payment.setPrice(price);
             passage.setPayment(payment);
             paymentRepository.save(payment);
-            modelMapper.map(passageDTO, passage);
             passageRepository.save(passage);
         } else if (passages.isEmpty()) {
             passageDTO.setStart(junction);
