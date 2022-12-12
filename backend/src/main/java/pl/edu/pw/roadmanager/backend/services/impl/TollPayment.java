@@ -9,15 +9,13 @@ import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.domain.*;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.TollDTO;
-import pl.edu.pw.roadmanager.backend.repositories.PaymentRepository;
-import pl.edu.pw.roadmanager.backend.repositories.RoadSegmentRepository;
-import pl.edu.pw.roadmanager.backend.repositories.TollRepository;
-import pl.edu.pw.roadmanager.backend.repositories.VehicleTollRepository;
+import pl.edu.pw.roadmanager.backend.repositories.*;
 import pl.edu.pw.roadmanager.backend.services.PaymentAPI;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class TollPayment implements PaymentAPI {
@@ -36,6 +34,9 @@ public class TollPayment implements PaymentAPI {
 
     @Autowired
     PaymentRepository paymentRepository;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Transactional
     @Override
@@ -87,10 +88,31 @@ public class TollPayment implements PaymentAPI {
 
     @Override
     public List<PaymentDTO> getPaymentList(String userId) {
+        initializePayments();
         Type listType = new TypeToken<List<PaymentDTO>>() {
         }.getType();
 
-        return modelMapper.map(paymentRepository.findAll(), listType);
+        Stream<Payment> paymentList = paymentRepository.findAll().stream().filter(payment -> payment.getPaid().equals(false));
 
+        return modelMapper.map(paymentList.toList(), listType);
+
+    }
+
+    private void initializePayments() {
+        AppUser appUser = new AppUser();
+        appUser.setFirstName("Jan");
+        appUser.setEmail("email@dupa.com");
+        appUser.setLastName("Kowalski");
+        appUser.setPhoneNumber("123456789");
+        appUserRepository.save(appUser);
+
+        Payment payment = new Payment(1L,true, 10,null);
+        paymentRepository.save(payment);
+        Payment payment1 = new Payment(2L,true, 10,null);
+        paymentRepository.save(payment1);
+        Payment payment2 = new Payment(3L,false, 10,null);
+        paymentRepository.save(payment2);
+        Payment payment3 = new Payment(4L,false, 10,null);
+        paymentRepository.save(payment3);
     }
 }
