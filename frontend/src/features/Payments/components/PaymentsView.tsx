@@ -26,9 +26,9 @@ export const PaymentsView = ({ payments }: PaymentsViewProps) => {
                             <TableCell align="center">Data</TableCell>
                             <TableCell align="center">Kwota</TableCell>
                             <TableCell align="center">Czy opłacono?</TableCell>
-                            <TableCell align="center">
-                                Nr. rejestracyjny
-                            </TableCell>
+                            {/*<TableCell align="center">*/}
+                            {/*    Nr. rejestracyjny*/}
+                            {/*</TableCell>*/}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -42,7 +42,7 @@ export const PaymentsView = ({ payments }: PaymentsViewProps) => {
                                 }}
                             >
                                 <TableCell align="center">
-                                    {p.passage?.date?.toDateString()}
+                                    {p.passage?.date?.toLocaleDateString()}
                                 </TableCell>
                                 <TableCell align="center">
                                     {p.price + " zł"}
