@@ -25,6 +25,6 @@ public class Payment {
     @Column(name = "price", nullable = false)
     private float price;
 
-    @OneToOne(mappedBy = "payment")
-    private Passage passage;
+    @Column(name = "passage_id", nullable = false)
+    private Long passage_id;
 }

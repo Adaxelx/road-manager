@@ -66,7 +66,7 @@ public class Sensor implements SensorAPI {
             }
             float price = roadSegment.getLength() * tolls.get(0).getPricePerKilometer();
             Payment payment = new Payment();
-            payment.setPassage(passage);
+            payment.setPassage_id(passage.getId());
             payment.setPaid(false);
             payment.setPrice(price);
             passage.setPayment(payment);
