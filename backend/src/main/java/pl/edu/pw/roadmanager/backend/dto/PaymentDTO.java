@@ -17,5 +17,5 @@ public class PaymentDTO {
 
     private float price;
 
-    private Passage passage;
+    private Long passage_id;
 }

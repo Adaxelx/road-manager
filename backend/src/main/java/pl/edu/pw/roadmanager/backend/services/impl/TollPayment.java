@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
-import pl.edu.pw.roadmanager.backend.domain.*;
+import pl.edu.pw.roadmanager.backend.domain.Payment;
+import pl.edu.pw.roadmanager.backend.domain.Toll;
+import pl.edu.pw.roadmanager.backend.domain.VehicleToll;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.TollDTO;
 import pl.edu.pw.roadmanager.backend.repositories.*;
@@ -88,31 +90,11 @@ public class TollPayment implements PaymentAPI {
 
     @Override
     public List<PaymentDTO> getPaymentList(String userId) {
-        initializePayments();
         Type listType = new TypeToken<List<PaymentDTO>>() {
         }.getType();
 
         Stream<Payment> paymentList = paymentRepository.findAll().stream().filter(payment -> payment.getPaid().equals(false));
 
         return modelMapper.map(paymentList.toList(), listType);
-
-    }
-
-    private void initializePayments() {
-        AppUser appUser = new AppUser();
-        appUser.setFirstName("Jan");
-        appUser.setEmail("email@dupa.com");
-        appUser.setLastName("Kowalski");
-        appUser.setPhoneNumber("123456789");
-        appUserRepository.save(appUser);
-
-        Payment payment = new Payment(1L,true, 10,null);
-        paymentRepository.save(payment);
-        Payment payment1 = new Payment(2L,true, 10,null);
-        paymentRepository.save(payment1);
-        Payment payment2 = new Payment(3L,false, 10,null);
-        paymentRepository.save(payment2);
-        Payment payment3 = new Payment(4L,false, 10,null);
-        paymentRepository.save(payment3);
     }
 }

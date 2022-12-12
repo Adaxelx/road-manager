@@ -33,4 +33,8 @@ public class Passage {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "junction_end")
     private Junction end;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "vehicle")
+    private Vehicle vehicle;
 }
