@@ -69,8 +69,21 @@ public class TollPayment implements PaymentAPI {
     @Override
     public List<TollDTO> getTollList() {
         Type listType = new TypeToken<List<TollDTO>>(){}.getType();
+        List<Toll> tolls = tollRepository.findAll();
+        List<List<Long>> segmentsId = new ArrayList<>();
+        tolls.forEach(t -> {
+            List<Long> ids = new ArrayList<>();
+            t.getSegments().forEach(s -> {
+                ids.add(s.getId());
+            });
+            segmentsId.add(ids);
+        });
+        List<TollDTO> mappedTolls = modelMapper.map(tolls, listType);
+        for (int i = 0; i < segmentsId.size(); i++) {
+            mappedTolls.get(i).setRoadSegments(segmentsId.get(i));
+        }
 
-        return modelMapper.map(tollRepository.findAll(), listType);
+        return mappedTolls;
     }
 
     @Override
