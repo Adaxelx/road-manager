@@ -35,7 +35,7 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
 									</TableHead>
 									<TableBody>
 										{
-											toll.vehicleTollDTOS?.map((vehicleToll, i) => 
+											toll.vehicleTolls?.map((vehicleToll, i) =>
 												<TableRow key={i}>
 													<TableCell>{vehicleToll.vehicleType}</TableCell>
 													<TableCell>{vehicleToll.pricePerKilometer}</TableCell>

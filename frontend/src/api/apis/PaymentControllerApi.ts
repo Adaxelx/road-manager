@@ -66,7 +66,7 @@ export class PaymentControllerApi extends runtime.BaseAPI {
                 method: "POST",
                 headers: headerParameters,
                 query: queryParameters,
-                body: TollDTOToJSON(requestParameters.tollDTO),
+                body: requestParameters.tollDTO,
             },
             initOverrides
         );

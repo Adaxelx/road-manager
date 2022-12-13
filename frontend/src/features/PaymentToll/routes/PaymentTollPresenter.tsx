@@ -22,7 +22,7 @@ export const PaymentTollPresenter = () => {
 	const handleAddTollClick = () => {
 		setEditedToll({
 			name: "Nowy taryfikator",
-			vehicleTollDTOS: [],
+			vehicleTolls: [],
 			roadSegments: []
 		})
 	}

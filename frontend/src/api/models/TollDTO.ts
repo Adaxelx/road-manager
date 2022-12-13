@@ -43,7 +43,7 @@ export interface TollDTO {
      * @type {Array<VehicleTollDTO>}
      * @memberof TollDTO
      */
-    vehicleTollDTOS?: Array<VehicleTollDTO>;
+    vehicleTolls?: Array<VehicleTollDTO>;
     /**
      *
      * @type {Array<number>}
@@ -62,7 +62,7 @@ export function instanceOfTollDTO(value: object): boolean {
 }
 
 export function TollDTOFromJSON(json: any): TollDTO {
-    return TollDTOFromJSONTyped(json, false);
+    return json;
 }
 
 export function TollDTOFromJSONTyped(
@@ -75,7 +75,7 @@ export function TollDTOFromJSONTyped(
     return {
         id: !exists(json, "id") ? undefined : json["id"],
         name: !exists(json, "name") ? undefined : json["name"],
-        vehicleTollDTOS: !exists(json, "vehicleTollDTOS")
+        vehicleTolls: !exists(json, "vehicleTollDTOS")
             ? undefined
             : (json["vehicleTollDTOS"] as Array<any>).map(
                   VehicleTollDTOFromJSON
@@ -97,9 +97,9 @@ export function TollDTOToJSON(value?: TollDTO | null): any {
         id: value.id,
         name: value.name,
         vehicleTollDTOS:
-            value.vehicleTollDTOS === undefined
+            value.vehicleTolls === undefined
                 ? undefined
-                : (value.vehicleTollDTOS as Array<any>).map(
+                : (value.vehicleTolls as Array<any>).map(
                       VehicleTollDTOToJSON
                   ),
         roadSegments: value.roadSegments,
