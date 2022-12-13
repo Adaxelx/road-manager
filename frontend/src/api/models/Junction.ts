@@ -16,52 +16,52 @@ import { exists, mapValues } from "../runtime";
 /**
  *
  * @export
- * @interface JunctionDTO
+ * @interface Junction
  */
-export interface JunctionDTO {
+export interface Junction {
     /**
      *
      * @type {number}
-     * @memberof JunctionDTO
+     * @memberof Junction
      */
     id?: number;
     /**
      *
      * @type {string}
-     * @memberof JunctionDTO
+     * @memberof Junction
      */
     name?: string;
     /**
      *
      * @type {number}
-     * @memberof JunctionDTO
+     * @memberof Junction
      */
     latitude?: number;
     /**
      *
      * @type {number}
-     * @memberof JunctionDTO
+     * @memberof Junction
      */
     longitude?: number;
 }
 
 /**
- * Check if a given object implements the JunctionDTO interface.
+ * Check if a given object implements the Junction interface.
  */
-export function instanceOfJunctionDTO(value: object): boolean {
+export function instanceOfJunction(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function JunctionDTOFromJSON(json: any): JunctionDTO {
-    return JunctionDTOFromJSONTyped(json, false);
+export function JunctionFromJSON(json: any): Junction {
+    return JunctionFromJSONTyped(json, false);
 }
 
-export function JunctionDTOFromJSONTyped(
+export function JunctionFromJSONTyped(
     json: any,
     ignoreDiscriminator: boolean
-): JunctionDTO {
+): Junction {
     if (json === undefined || json === null) {
         return json;
     }
@@ -73,7 +73,7 @@ export function JunctionDTOFromJSONTyped(
     };
 }
 
-export function JunctionDTOToJSON(value?: JunctionDTO | null): any {
+export function JunctionToJSON(value?: Junction | null): any {
     if (value === undefined) {
         return undefined;
     }

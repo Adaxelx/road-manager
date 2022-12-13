@@ -6,6 +6,8 @@ import { Layout } from "@src/shared/Layout/Layout";
 import { DrivePresenter } from "@features/Drive/routes/DrivePresenter";
 import { Home } from "@features/Home/routes/Home";
 import { RoadNetworkPresenter } from "@features/RoadNetwork/routes/RoadNetworkPresenter";
+import { PaymentsPresenter } from "@features/Payments/routes/PaymentsPresenter";
+import { PaymentTollPresenter } from "@src/features/PaymentToll/routes/PaymentTollPresenter";
 
 const App = () => {
     return (
@@ -22,6 +24,24 @@ export const routes = [
         path: "/app",
         element: <App />,
         children: [
+            {
+                path: "payments",
+                element: (
+                    <>
+                        <NavHeader />
+                        <PaymentsPresenter />
+                    </>
+                )
+            },
+            {
+                path: "payment-toll",
+                element: (
+                    <>
+                        <NavHeader />
+                        <PaymentTollPresenter />
+                    </>
+                )
+            },
             {
                 path: "road-network",
                 element: (

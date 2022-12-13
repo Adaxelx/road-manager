@@ -1,4 +1,5 @@
 import "leaflet/dist/leaflet.css";
+import { Snackbar } from "@mui/material";
 import { LatLng } from "leaflet";
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -8,7 +9,6 @@ import { MapMarker } from "@features/RoadNetwork/components/MapMarker/MapMarker"
 import { RoadForm } from "@features/RoadNetwork/components/RoadNetworkView/RoadForm";
 import { RoadJunctionsTable } from "@features/RoadNetwork/components/RoadNetworkView/RoadJunctionsTable";
 import { RoadList } from "@features/RoadNetwork/components/RoadNetworkView/RoadList";
-import { Snackbar } from "@mui/material";
 
 interface MapConfig {
     mapCenter: [number, number];
@@ -28,11 +28,6 @@ export enum EditMode {
     NONE,
     EDIT,
     ADD,
-}
-
-export interface SnackbarConfig {
-    isFormValid: boolean;
-    isSnackbarOpen: boolean;
 }
 
 interface RoadNetworkViewProps {
