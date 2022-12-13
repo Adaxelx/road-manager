@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
-import pl.edu.pw.roadmanager.backend.domain.*;
+import pl.edu.pw.roadmanager.backend.domain.Payment;
+import pl.edu.pw.roadmanager.backend.domain.Toll;
+import pl.edu.pw.roadmanager.backend.domain.VehicleToll;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.TollDTO;
-import pl.edu.pw.roadmanager.backend.repositories.PaymentRepository;
-import pl.edu.pw.roadmanager.backend.repositories.RoadSegmentRepository;
-import pl.edu.pw.roadmanager.backend.repositories.TollRepository;
-import pl.edu.pw.roadmanager.backend.repositories.VehicleTollRepository;
+import pl.edu.pw.roadmanager.backend.repositories.*;
 import pl.edu.pw.roadmanager.backend.services.PaymentAPI;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class TollPayment implements PaymentAPI {
@@ -36,6 +36,9 @@ public class TollPayment implements PaymentAPI {
 
     @Autowired
     PaymentRepository paymentRepository;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Transactional
     @Override
@@ -89,7 +92,8 @@ public class TollPayment implements PaymentAPI {
         Type listType = new TypeToken<List<PaymentDTO>>() {
         }.getType();
 
-        return modelMapper.map(paymentRepository.findAll(), listType);
+        Stream<Payment> paymentList = paymentRepository.findAll().stream().filter(payment -> payment.getPaid().equals(false));
 
+        return modelMapper.map(paymentList.toList(), listType);
     }
 }
