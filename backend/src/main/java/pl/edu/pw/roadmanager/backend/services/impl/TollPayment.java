@@ -32,9 +32,6 @@ public class TollPayment implements PaymentAPI {
     VehicleTollRepository vehicleTollRepository;
 
     @Autowired
-    RoadSegmentRepository roadSegmentRepository;
-
-    @Autowired
     PaymentRepository paymentRepository;
 
     @Autowired
