@@ -48,7 +48,7 @@ public class TollPayment implements PaymentAPI {
 
         toll.setName(tollDTO.getName());
 
-        tollDTO.getVehicleTollDTOS().forEach(vt -> {
+        tollDTO.getVehicleTolls().forEach(vt -> {
             VehicleToll vehicleToll = new VehicleToll();
 
             if (vt.getId() != null) {
@@ -68,8 +68,7 @@ public class TollPayment implements PaymentAPI {
 
     @Override
     public List<TollDTO> getTollList() {
-        Type listType = new TypeToken<List<TollDTO>>() {
-        }.getType();
+        Type listType = new TypeToken<List<TollDTO>>(){}.getType();
 
         return modelMapper.map(tollRepository.findAll(), listType);
     }
