@@ -39,4 +39,7 @@ public class AppUser {
             inverseJoinColumns = @JoinColumn(name = "vehicle_id")
     )
     private List<Vehicle> vehicles;
+
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.LAZY)
+    private List<Subscription> subscriptions;
 }
