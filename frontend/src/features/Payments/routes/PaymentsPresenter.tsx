@@ -16,7 +16,7 @@ export const PaymentsPresenter = () => {
 
     const loadPayments = async () =>
         paymentsApi
-            .getPaymentList("")
+            .getPaymentList("1")
             .then((paymentList: PaymentDTO[]) => setPayments(paymentList));
 
     return <PaymentsView payments={payments} />;
