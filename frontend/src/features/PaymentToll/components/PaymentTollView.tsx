@@ -5,7 +5,6 @@ interface PaymentTollViewProps {
     tolls: TollDTO[];
 	handleEditTollClick: (toll: TollDTO) => void
 	handleAddTollClick: () => void
-	handleRemoveTollClick: (toll: TollDTO) => void
 }
 
 
@@ -21,25 +20,23 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
             <h1>Taryfy</h1>
 
 			<Grid container gap={1}>{
-				props.tolls.map(toll => 
-					<Grid item xs={12}>
-						<Card key={toll.id}>
+				props.tolls.map(toll =>
+					<Grid item xs={12} key={toll.id}>
+						<Card>
 							<CardContent>
 								<Typography variant="h5">{toll.name}</Typography>
 								
 								<Table>
 									<TableHead>
 										<TableRow>
-											<TableCell>Nazwa pojazdu</TableCell>
 											<TableCell>Typ pojazdu</TableCell>
 											<TableCell>Cena za km</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
 										{
-											toll.vehicleTollDTOS?.map((vehicleToll, i) => 
+											toll.vehicleTolls?.map((vehicleToll, i) =>
 												<TableRow key={i}>
-													<TableCell>{vehicleToll.name}</TableCell>
 													<TableCell>{vehicleToll.vehicleType}</TableCell>
 													<TableCell>{vehicleToll.pricePerKilometer}</TableCell>
 												</TableRow>
@@ -53,12 +50,6 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
 									onClick={() => props.handleEditTollClick(toll)}
 								>
 									Edytuj taryfikator
-								</Button>
-								<Button
-									onClick={() => props.handleRemoveTollClick(toll)}
-									color="error"
-								>
-									Usuń taryfikator
 								</Button>
 							</CardActions>
 						</Card>

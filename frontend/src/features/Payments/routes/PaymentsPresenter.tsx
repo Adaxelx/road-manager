@@ -1,54 +1,23 @@
 import * as React from "react";
-import { PaymentDTO } from "@api/models/PaymentDTO";
-import { PaymentsView } from "@features/Payments/components/PaymentsView";
 import { useEffect } from "react";
 
+import { PaymentControllerApi } from "@src/api";
+import { PaymentDTO } from "@api/models/PaymentDTO";
+import { PaymentsView } from "@features/Payments/components/PaymentsView";
+
 export const PaymentsPresenter = () => {
+    const paymentsApi: PaymentControllerApi = new PaymentControllerApi();
+
     const [payments, setPayments] = React.useState<PaymentDTO[]>([]);
 
     useEffect(() => {
         loadPayments();
     }, []);
 
-    const loadPayments = () => {
-        setPayments([
-            {
-                paid: true,
-                passage: {
-                    date: "2022-10-30",
-                    junctionId: 0,
-                    registrationNumber: "S01XXPXX",
-                },
-                amount: 100.99,
-            },
-            {
-                paid: false,
-                passage: {
-                    date: "2022-11-25",
-                    junctionId: 0,
-                    registrationNumber: "S01XXPXX",
-                },
-                amount: 200.99,
-            },
-            {
-                paid: false,
-                passage: {
-                    date: "2022-5-30",
-                    junctionId: 0,
-                    registrationNumber: "S01XXPXX",
-                },
-                amount: 300.99,
-            },
-            {
-                paid: false,
-                passage: {
-                    date: "2022-4-30",
-                    junctionId: 0,
-                    registrationNumber: "S01XXPXX",
-                },
-                amount: 400.99,
-            },
-        ]);
-    };
+    const loadPayments = async () =>
+        paymentsApi
+            .getPaymentList("1")
+            .then((paymentList: PaymentDTO[]) => setPayments(paymentList));
+
     return <PaymentsView payments={payments} />;
 };

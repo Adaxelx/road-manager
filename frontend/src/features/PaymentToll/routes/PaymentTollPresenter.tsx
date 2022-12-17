@@ -1,24 +1,28 @@
-import { PaymentTollApi } from "@src/api/apis/PaymentTollApi";
 import { TollDTO } from "@src/api/models/TollDTO";
 import * as React from "react";
 import { PaymentTollEditView } from "../components/PaymentTollEditView";
 import { PaymentTollView } from "../components/PaymentTollView";
+import {useEffect} from "react";
+import {PaymentControllerApi} from "@src/api";
 
 export const PaymentTollPresenter = () => {
+	const [loading, setLoading] = React.useState(true)
     const [tolls, setTolls] = React.useState<TollDTO[]>([])
 	const [editedToll, setEditedToll] = React.useState<TollDTO | null>(null)
 
-    const loadTolls = () => {
-        const apiResult = PaymentTollApi
-            .getTollList();
+	const api = new PaymentControllerApi()
 
-        setTolls(apiResult);
-    }
+	useEffect(() => {
+		api.getTool().then(items => {
+			setTolls(items)
+			setLoading(false)
+		})
+	}, [])
 
 	const handleAddTollClick = () => {
 		setEditedToll({
 			name: "Nowy taryfikator",
-			vehicleTollDTOS: [],
+			vehicleTolls: [],
 			roadSegments: []
 		})
 	}
@@ -32,7 +36,7 @@ export const PaymentTollPresenter = () => {
 		setTolls([...tolls])
 	}
 
-	const handleSaveEditedTollClick = (toll: TollDTO) => {
+	const handleSaveEditedTollClick = async (toll: TollDTO) => {
 		if (toll.id) {
 			tolls[tolls.findIndex(t => t.id === toll.id)] = toll
 			setTolls([...tolls])
@@ -47,23 +51,22 @@ export const PaymentTollPresenter = () => {
 		}
 
 		setEditedToll(null)
+		await api.addOrEditTool(toll)
 	}
 
 	const handleDismissEditViewClick = () => {
 		setEditedToll(null)
 	}
 
-    if (tolls.length === 0) {
-        loadTolls();
-    }
-
     return (
+		loading ?
+			<p>Ładowanie...</p>
+		:
 		editedToll === null
         ? <PaymentTollView
 			tolls={tolls}
 			handleEditTollClick={handleEditTollClick}
 			handleAddTollClick={handleAddTollClick}
-			handleRemoveTollClick={handleRemoveTollClick}
 		/>
 		: <PaymentTollEditView
 			toll={editedToll}

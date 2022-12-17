@@ -23,52 +23,52 @@ import {
 /**
  *
  * @export
- * @interface PaymentDTO
+ * @interface Payment
  */
-export interface PaymentDTO {
+export interface Payment {
     /**
      *
      * @type {number}
-     * @memberof PaymentDTO
+     * @memberof Payment
      */
     id?: number;
     /**
      *
      * @type {boolean}
-     * @memberof PaymentDTO
+     * @memberof Payment
      */
     paid?: boolean;
     /**
      *
      * @type {number}
-     * @memberof PaymentDTO
+     * @memberof Payment
      */
     price?: number;
     /**
      *
      * @type {Passage}
-     * @memberof PaymentDTO
+     * @memberof Payment
      */
     passage?: Passage;
 }
 
 /**
- * Check if a given object implements the PaymentDTO interface.
+ * Check if a given object implements the Payment interface.
  */
-export function instanceOfPaymentDTO(value: object): boolean {
+export function instanceOfPayment(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function PaymentDTOFromJSON(json: any): PaymentDTO {
-    return PaymentDTOFromJSONTyped(json, false);
+export function PaymentFromJSON(json: any): Payment {
+    return PaymentFromJSONTyped(json, false);
 }
 
-export function PaymentDTOFromJSONTyped(
+export function PaymentFromJSONTyped(
     json: any,
     ignoreDiscriminator: boolean
-): PaymentDTO {
+): Payment {
     if (json === undefined || json === null) {
         return json;
     }
@@ -82,7 +82,7 @@ export function PaymentDTOFromJSONTyped(
     };
 }
 
-export function PaymentDTOToJSON(value?: PaymentDTO | null): any {
+export function PaymentToJSON(value?: Payment | null): any {
     if (value === undefined) {
         return undefined;
     }

@@ -1,4 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from "./DriveApi";
-export * from "./RoadNetworkApi";
+export * from "./DriveControllerApi";
+export * from "./PaymentControllerApi";
+export * from "./RoadNetworkControllerApi";

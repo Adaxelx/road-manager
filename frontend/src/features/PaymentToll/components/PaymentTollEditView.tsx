@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Paper, Snackbar, TextField } from "@mui/material"
 import { TollDTO } from "@src/api/models/TollDTO"
-import { VehicleTollDTO, VehicleType } from "@src/api/models/VehicleTollDTO"
+import {VehicleTollDTO, VehicleTollDTOVehicleTypeEnum} from "@src/api/models/VehicleTollDTO"
 import React from "react"
 import { PaymentTollEditVehicleTollItem } from "./PaymentTollEditVehicleTollItem"
 
@@ -16,15 +16,10 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 	handleSaveEditedTollClick
 }) => {
 	const [tollName, setTollName] = React.useState(toll.name ?? "")
-	const [vehicleTolls, setVehicleTolls] = React.useState(toll.vehicleTollDTOS ?? [])
+	const [vehicleTolls, setVehicleTolls] = React.useState(toll.vehicleTolls ?? [])
 	const [error, setError] = React.useState("")
 	
-	const handleVehicleTollNameChange = (vt: VehicleTollDTO, newName: string) => {
-		vt.name = newName
-		setVehicleTolls([...vehicleTolls])
-	}
-	
-	const handleVehicleTollTypeChange = (vt: VehicleTollDTO, newType: VehicleType) => {
+	const handleVehicleTollTypeChange = (vt: VehicleTollDTO, newType: VehicleTollDTOVehicleTypeEnum) => {
 		vt.vehicleType = newType
 		setVehicleTolls([...vehicleTolls])
 	}
@@ -43,7 +38,6 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 		setVehicleTolls([
 			...vehicleTolls,
 			{
-				name: "",
 				pricePerKilometer: 0
 			}
 		])
@@ -62,10 +56,7 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 		for (const vt of vehicleTolls) {
 			const i = vehicleTolls.indexOf(vt) + 1
 			
-			if (vt.name === "") {
-				setError(`Taryfa #${i}: nazwa nie może być pusta`)
-				return
-			} else if (!Object.values(VehicleType).includes(vt.vehicleType as any)) {
+			if (!Object.values(VehicleTollDTOVehicleTypeEnum).includes(vt.vehicleType as any)) {
 				setError(`Taryfa #${i}: typ samochodu musi być wybrany`)
 				return
 			} else if (vt.pricePerKilometer === undefined || vt.pricePerKilometer <= 0) {
@@ -77,7 +68,7 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 		handleSaveEditedTollClick({
 			...toll,
 			name: tollName,
-			vehicleTollDTOS: vehicleTolls
+			vehicleTolls: vehicleTolls
 		})
 	}
 
@@ -99,7 +90,6 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 					vehicleTolls.map((vehicleToll, i) => 
 						<PaymentTollEditVehicleTollItem
 							vehicleToll={vehicleToll}
-							handleVehicleTollNameChange={handleVehicleTollNameChange}
 							handleVehicleTollTypeChange={handleVehicleTollTypeChange}
 							handleVehicleTollPriceChange={handleVehicleTollPriceChange}
 							handleVehicleTollDelete={handleVehicleTollDelete}
