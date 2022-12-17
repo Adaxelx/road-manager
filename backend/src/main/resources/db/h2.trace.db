@@ -326,3 +326,6 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL sta
        add constraint FKev7r3t3oj2xryhm6bwggwhgxj 
        foreign key (app_user_id) 
        references ap [42102-214]
+2022-12-17 19:27:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]SUBSCRIPTION_TYPE"; expected "SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
+SUBSCRIPTION_TYPE [42001-214]
