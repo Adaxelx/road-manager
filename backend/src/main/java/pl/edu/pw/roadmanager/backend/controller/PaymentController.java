@@ -80,7 +80,7 @@ public class PaymentController {
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = PaymentDTO.class)))})})
     @GetMapping("/payment")
-    public ResponseEntity<?> getPaymentList(@Valid @RequestBody String userId) {
+    public ResponseEntity<?> getPaymentList(@Valid @RequestParam String userId) {
         return ResponseEntity.ok().body(paymentAPI.getPaymentList(userId));
 
     }

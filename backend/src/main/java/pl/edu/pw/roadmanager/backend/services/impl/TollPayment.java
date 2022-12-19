@@ -98,12 +98,7 @@ public class TollPayment implements PaymentAPI {
     }
 
     @Override
-    public List<PaymentDTO> getPaymentList(String userId) {
-        Type listType = new TypeToken<List<PaymentDTO>>() {
-        }.getType();
-
-        Stream<Payment> paymentList = paymentRepository.findAll().stream().filter(payment -> payment.getPaid().equals(false));
-
-        return modelMapper.map(paymentList.toList(), listType);
+    public List<Payment> getPaymentList(String userId) {
+        return paymentRepository.findAll();
     }
 }
