@@ -16,6 +16,7 @@ import pl.edu.pw.roadmanager.backend.dto.TollDTO;
 import pl.edu.pw.roadmanager.backend.services.PaymentAPI;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @CrossOrigin
@@ -83,5 +84,26 @@ public class PaymentController {
     public ResponseEntity<?> getPaymentList(@Valid @RequestBody String userId) {
         return ResponseEntity.ok().body(paymentAPI.getPaymentList(userId));
 
+    }
+
+    @Operation(summary = "Make the payment. Payment and code can not be NULL.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Payment successfully completed.",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Unsuccessful payment operation. Check data and try again."),
+            @ApiResponse(responseCode = "404", description = "Payment with given id does not exist."),
+            @ApiResponse(responseCode = "409", description = "User already paid for the payment.")})
+    @PutMapping("/makePayment/{id}")
+    public ResponseEntity<?> makePayment(@NotNull @RequestBody String code, @NotNull @PathVariable Long id) {
+        try {
+            paymentAPI.makePayment(id, Integer.parseInt(code));
+            return ResponseEntity.ok().build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }

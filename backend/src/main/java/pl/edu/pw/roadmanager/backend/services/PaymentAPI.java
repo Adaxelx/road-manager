@@ -14,4 +14,6 @@ public interface PaymentAPI {
     void addPayment(PaymentDTO paymentDTO);
 
     List<PaymentDTO> getPaymentList(String userId);
+
+    void makePayment(Long id, Integer code);
 }
