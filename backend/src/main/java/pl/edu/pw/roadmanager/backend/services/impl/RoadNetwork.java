@@ -61,6 +61,8 @@ public class RoadNetwork implements RoadNetworkAPI {
 
             if (s.getId() != null) {
                 roadSegment = roadSegmentRepository.findById(s.getId()).orElseThrow(() -> new NotFoundException("Road segment not found."));
+                roadSegment.setStart(null);
+                roadSegment.setEnd(null);
             }
             if (s.getStart().getId() != null) {
                 start = junctionRepository.findById(s.getStart().getId()).orElseThrow(() -> new NotFoundException("Segments start junction not found."));
