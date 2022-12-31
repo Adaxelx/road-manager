@@ -1,6 +1,6 @@
+import styles from "./styles.module.scss";
 import { Grid } from "@mui/material";
 import { Stack } from "@mui/system";
-import styles from "./styles.module.scss";
 
 import { HomeButton } from "@features/Home/components/HomeButton/HomeButton";
 
@@ -10,7 +10,7 @@ export const Home = () => {
             <img src="/logo.svg" width={64} />
 
             <Grid container justifyContent="center" gap={1}>
-                <Grid container justifyContent='center' gap={1}>
+                <Grid container justifyContent="center" gap={1}>
                     <HomeButton
                         href="/app/road-network"
                         title="Sieć drogowa"
@@ -22,7 +22,7 @@ export const Home = () => {
                         icon="/drive.svg"
                     />
                 </Grid>
-                <Grid container justifyContent='center' gap={1}>
+                <Grid container justifyContent="center" gap={1}>
                     <HomeButton
                         href="/app/payments"
                         title="Opłaty"
@@ -32,6 +32,13 @@ export const Home = () => {
                         href="/app/payment-toll"
                         title="Taryfikatory"
                         icon="/toll.svg"
+                    />
+                </Grid>
+                <Grid container justifyContent="center" gap={1}>
+                    <HomeButton
+                        href="/app/subscriptions"
+                        title="Abonamenty"
+                        icon="/drive.svg"
                     />
                 </Grid>
             </Grid>

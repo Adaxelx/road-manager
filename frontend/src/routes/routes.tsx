@@ -1,13 +1,14 @@
 import { Navigate, Outlet } from "react-router-dom";
 
+import { PaymentTollPresenter } from "@src/features/PaymentToll/routes/PaymentTollPresenter";
 import { OrangeThemeProvider } from "@src/providers/OrangeThemeProvider";
 import { NavHeader } from "@src/shared/Layout/components/NavHeader/NavHeader";
 import { Layout } from "@src/shared/Layout/Layout";
 import { DrivePresenter } from "@features/Drive/routes/DrivePresenter";
 import { Home } from "@features/Home/routes/Home";
-import { RoadNetworkPresenter } from "@features/RoadNetwork/routes/RoadNetworkPresenter";
 import { PaymentsPresenter } from "@features/Payments/routes/PaymentsPresenter";
-import { PaymentTollPresenter } from "@src/features/PaymentToll/routes/PaymentTollPresenter";
+import { RoadNetworkPresenter } from "@features/RoadNetwork/routes/RoadNetworkPresenter";
+import { SubscriptionWrapper } from "@features/Subscriptions/routes/SubscriptionWrapper";
 
 const App = () => {
     return (
@@ -25,13 +26,22 @@ export const routes = [
         element: <App />,
         children: [
             {
+                path: "subscriptions",
+                element: (
+                    <>
+                        <NavHeader />
+                        <SubscriptionWrapper />
+                    </>
+                ),
+            },
+            {
                 path: "payments",
                 element: (
                     <>
                         <NavHeader />
                         <PaymentsPresenter />
                     </>
-                )
+                ),
             },
             {
                 path: "payment-toll",
@@ -40,7 +50,7 @@ export const routes = [
                         <NavHeader />
                         <PaymentTollPresenter />
                     </>
-                )
+                ),
             },
             {
                 path: "road-network",

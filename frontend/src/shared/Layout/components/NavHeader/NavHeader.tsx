@@ -24,6 +24,9 @@ export const NavHeader = () => {
                         <Link to="/app/payment-toll">
                             <Button>Taryfikatory</Button>
                         </Link>
+                        <Link to="/app/subscriptions">
+                            <Button>Abonamenty</Button>
+                        </Link>
                     </Box>
                 </Toolbar>
             </Container>
