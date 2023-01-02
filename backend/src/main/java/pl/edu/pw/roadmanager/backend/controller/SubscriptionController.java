@@ -5,23 +5,24 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.pw.roadmanager.backend.dto.SubscriptionPaymentDTO;
 
 @RestController
 @CrossOrigin
 public class SubscriptionController {
 
     @GetMapping("/getSubscriptions")
-    public ResponseEntity<?> getSubscriptions(){
+    public ResponseEntity<?> getSubscriptions() {
 
     }
 
     @GetMapping("/getSubscriptionTypes")
-    public ResponseEntity<?> getSubscriptionTypes(){
+    public ResponseEntity<?> getSubscriptionTypes() {
 
     }
 
     @PostMapping("/addSubscription")
-    public ResponseEntity<?> addSubscription(SubscriptionPaymentDTO subscriptionPaymentDTO){
+    public ResponseEntity<?> addSubscription(SubscriptionPaymentDTO subscriptionPaymentDTO) {
 
     }
 }
