@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface SubscriptionAPI {
 
-    List<SubscriptionDTO> getSubscriptions(SubscriptionDTO subscriptionDTO);
+    List<SubscriptionDTO> getSubscriptions();
 
-    List<SubscriptionTypeDTO> getSubscriptionTypes(SubscriptionTypeDTO subscriptionTypeDTO);
+    List<SubscriptionTypeDTO> getSubscriptionTypes();
 
     int addSubscription(SubscriptionPaymentDTO subscriptionPayment);
 }
