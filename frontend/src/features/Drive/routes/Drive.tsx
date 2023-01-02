@@ -31,7 +31,7 @@ const DriveV = (props: DriveProps) => {
     const initView = () => {
         return (
             <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <h1>Drive</h1>
+                <h1>Rejestr pojazdów</h1>
                 <form style={{ display: 'grid', width: 'fit-content' }}>
                     <label>Imię</label>
                     <input name="name" onChange={updateForm} />
