@@ -329,3 +329,6 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL sta
 2022-12-17 19:27:23 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]SUBSCRIPTION_TYPE"; expected "SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
 SUBSCRIPTION_TYPE [42001-214]
+2023-01-02 20:31:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER VALUES (1, [*])"; expected "DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO APP_USER VALUES (1, ) [42001-214]
