@@ -12,6 +12,7 @@ import pl.edu.pw.roadmanager.backend.domain.VehicleToll;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.TollDTO;
 import pl.edu.pw.roadmanager.backend.repositories.*;
+import pl.edu.pw.roadmanager.backend.services.PayUAPI;
 import pl.edu.pw.roadmanager.backend.services.PaymentAPI;
 
 import java.lang.reflect.Type;
@@ -33,6 +34,9 @@ public class PaymentService implements PaymentAPI {
 
     @Autowired
     PaymentRepository paymentRepository;
+
+    @Autowired
+    private PayUAPI payU;
 
     @Autowired
     private AppUserRepository appUserRepository;
@@ -108,10 +112,7 @@ public class PaymentService implements PaymentAPI {
         Payment payment = paymentRepository.findById(id).orElseThrow(() -> new NotFoundException("Payment not found"));
 
         if (!payment.getPaid()) {
-            //Simulation of checking code
-            boolean paymentResult = code.equals(code);
-
-            if (paymentResult) {
+            if (payU.makePayment(code)) {
                 payment.setPaid(true);
                 paymentRepository.save(payment);
             } else {
