@@ -40,8 +40,9 @@ public class SubscriptionService implements SubscriptionAPI {
     public List<SubscriptionDTO> getSubscriptions() {
         Type type = new TypeToken<List<SubscriptionDTO>>() {
         }.getType();
+        AppUser appUser = appUserRepository.getReferenceById(1L);
 
-        return modelMapper.map(subscriptionRepository.findAll(), type);
+        return modelMapper.map(appUser.getSubscriptions(), type);
     }
 
     @Override
