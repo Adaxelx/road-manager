@@ -10,6 +10,8 @@ import pl.edu.pw.roadmanager.backend.enums.VehicleType;
 import pl.edu.pw.roadmanager.backend.repositories.*;
 import pl.edu.pw.roadmanager.backend.services.SensorAPI;
 
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,6 +34,9 @@ public class Sensor implements SensorAPI {
 
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @Override
     public int registerPassage(PassageDTO passageDTO) {
@@ -67,7 +72,7 @@ public class Sensor implements SensorAPI {
             float price = roadSegment.getLength() * tolls.get(0).getPricePerKilometer();
             Payment payment = new Payment();
             payment.setPassage_id(passage.getId());
-            payment.setPaid(false);
+            payment.setPaid(checkIfSubscribed());
             payment.setPrice(price);
             passage.setPayment(payment);
             paymentRepository.save(payment);
@@ -80,6 +85,17 @@ public class Sensor implements SensorAPI {
             return 400;
         }
         return 200;
+    }
+
+    private Boolean checkIfSubscribed() {
+        AppUser appUser = appUserRepository.getReferenceById(1L);
+        List<Subscription> subscriptions = appUser.getSubscriptions();
+        if (subscriptions.isEmpty()){
+            return false;
+        }
+        subscriptions.sort(Comparator.comparing(Subscription::getTo).reversed());
+        Date latest = subscriptions.get(0).getTo();
+        return latest.compareTo(new Date()) > 0;
     }
 
     private RoadSegment getRoadSegmentByJunctions(Passage passage) {

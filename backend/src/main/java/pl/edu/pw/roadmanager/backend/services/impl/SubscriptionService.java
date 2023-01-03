@@ -77,10 +77,13 @@ public class SubscriptionService implements SubscriptionAPI {
     }
 
     private Date getEndDate(int period, AppUser appUser) {
+        Date now = new Date();
         List<Subscription> subscriptions = appUser.getSubscriptions();
-        subscriptions.sort(Comparator.comparing(Subscription::getTo));
-        Date latest = subscriptions.get(subscriptions.size() - 1).getTo();
-        Date now = new Date().compareTo(latest) > 0 ? new Date() : latest;
+        if (!subscriptions.isEmpty()) {
+            subscriptions.sort(Comparator.comparing(Subscription::getTo).reversed());
+            Date latest = subscriptions.get(0).getTo();
+            now = now.compareTo(latest) > 0 ? now : latest;
+        }
         return java.sql.Timestamp.valueOf(LocalDateTime.from(now.toInstant().atZone(ZoneId.of("UTC"))).plusDays(period));
     }
 }
