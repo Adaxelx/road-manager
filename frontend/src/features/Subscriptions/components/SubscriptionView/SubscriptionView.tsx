@@ -1,12 +1,12 @@
 import {
-    Alert,
-    Box,
-    Card,
-    CardActions,
-    CardContent,
-    Radio,
-    Snackbar,
-    Typography,
+	Alert,
+	Box,
+	Card,
+	CardActions,
+	CardContent,
+	Radio,
+	Snackbar,
+	Typography
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -20,6 +20,7 @@ import React from "react";
 
 import { SubscriptionDTO } from "@api/models/SubscriptionDTO";
 import { SubscriptionTypeDTO } from "@api/models/SubscriptionType";
+import { PaymentPopup } from "@src/shared/Payment/PaymentPopup";
 interface RoadNetworkViewProps {
     subscriptionTypes: SubscriptionTypeDTO[];
     subscriptions: SubscriptionDTO[];
@@ -37,9 +38,11 @@ export const SubscriptionView = ({
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
     const [alert, setAlert] = React.useState<any>();
 
-    const [displayForm, setDisplayForm] = React.useState<boolean>(false);
+    const [displayForm, setDisplayForm] = React.useState(false);
     const [chosenSubscriptionTypeIdx, setChosenSubscriptionTypeIdx] =
         React.useState<number | undefined>();
+
+	const [paymentPopupOpen, setPaymentPopupOpen] = React.useState(false)
 
     const errorAlert = (
         <Alert
@@ -75,16 +78,21 @@ export const SubscriptionView = ({
                 ),
                 type: chosenSubscription,
             }).then(() => {
-                setChosenSubscriptionTypeIdx(0);
-                setDisplayForm(false);
-                setSnackbarOpen(true);
-                setAlert(successAlert);
+				setPaymentPopupOpen(true)
             });
         } else {
             setSnackbarOpen(true);
             setAlert(errorAlert);
         }
     };
+
+	const handlePaymentComplete = () => {
+		setPaymentPopupOpen(false)
+		setChosenSubscriptionTypeIdx(undefined);
+		setDisplayForm(false);
+		setSnackbarOpen(true);
+		setAlert(successAlert);
+	}
 
     return (
         <>
@@ -220,6 +228,14 @@ export const SubscriptionView = ({
             ) : (
                 <></>
             )}
+			{
+				paymentPopupOpen && <PaymentPopup
+					open={paymentPopupOpen}
+					amount={subscriptionTypes[chosenSubscriptionTypeIdx!!].price}
+					onClose={() => setPaymentPopupOpen(false)}
+					onPaymentComplete={handlePaymentComplete}
+				/>
+			}
         </>
     );
 };

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useEffect } from "react";
 
-import { VehicleTollDTOVehicleTypeEnum } from "@src/api";
 import { SubscriptionDTO } from "@api/models/SubscriptionDTO";
 import { SubscriptionTypeDTO } from "@api/models/SubscriptionType";
 import { SubscriptionView } from "@features/Subscriptions/components/SubscriptionView/SubscriptionView";
+import { VehicleTollDTOVehicleTypeEnum } from "@src/api";
 
 export const SubscriptionWrapper = () => {
     const [subscriptions, setSubscriptions] = React.useState<SubscriptionDTO[]>(
@@ -98,15 +98,17 @@ export const SubscriptionWrapper = () => {
     //         .then((subscriptions: SubscriptionDTO[]) => setSubscriptions(subscriptions));
 
     return (
-        <SubscriptionView
-            subscriptions={subscriptions}
-            subscriptionTypes={subscriptionTypes}
-            handleBuySubscriptionButtonClicked={
-                handleBuySubscriptionButtonClicked
-            }
-            handleBuySubscriptionFormSubmitted={
-                handleBuySubscriptionFormSubmitted
-            }
-        />
+        <>
+			<SubscriptionView
+				subscriptions={subscriptions}
+				subscriptionTypes={subscriptionTypes}
+				handleBuySubscriptionButtonClicked={
+					handleBuySubscriptionButtonClicked
+				}
+				handleBuySubscriptionFormSubmitted={
+					handleBuySubscriptionFormSubmitted
+				}
+			/>
+		</>
     );
 };
