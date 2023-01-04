@@ -11,7 +11,7 @@ interface DriveViewProps {
 
 export const DriveView = (props: DriveViewProps) => {
     const validationSchema = object().shape({
-        secondOwnerName: string(),
+        secondOwner: string(),
         registrationNumber: string().required("Numer rejestracyjny jest wymagany"),
         technicalID: number()
             .typeError("Identyfikator techniczny musi być liczbą całkowitą")
@@ -19,7 +19,7 @@ export const DriveView = (props: DriveViewProps) => {
     });
 
     const initialValues: VehicleDTO = {
-        secondOwnerName: "",
+        secondOwner: "",
         registrationNumber: "",
         technicalID: "" || 0,
     };
@@ -45,13 +45,13 @@ export const DriveView = (props: DriveViewProps) => {
                 <TextField
                     sx={{ mb: 3}}
                     fullWidth
-                    id="secondOwnerName"
-                    name="secondOwnerName"
+                    id="secondOwner"
+                    name="secondOwner"
                     label="Imię i nazwisko drugiego właściciela (opcjonalne)"
-                    value={formik.values.secondOwnerName}
+                    value={formik.values.secondOwner}
                     onChange={formik.handleChange}
-                    error={formik.touched.secondOwnerName && !!formik.errors.secondOwnerName}
-                    helperText={formik.touched.secondOwnerName && formik.errors.secondOwnerName}
+                    error={formik.touched.secondOwner && !!formik.errors.secondOwner}
+                    helperText={formik.touched.secondOwner && formik.errors.secondOwner}
                 />
                 <TextField
                     sx={{ mb: 3}}
