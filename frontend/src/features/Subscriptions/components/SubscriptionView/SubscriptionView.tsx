@@ -1,12 +1,12 @@
 import {
-	Alert,
-	Box,
-	Card,
-	CardActions,
-	CardContent,
-	Radio,
-	Snackbar,
-	Typography
+    Alert,
+    Box,
+    Card,
+    CardActions,
+    CardContent,
+    Radio,
+    Snackbar,
+    Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -16,18 +16,20 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import React from "react";
+import React, { useState } from "react";
 
 import { SubscriptionDTO } from "@api/models/SubscriptionDTO";
-import { SubscriptionTypeDTO } from "@api/models/SubscriptionType";
+import { SubscriptionTypeDTO } from "@api/models/SubscriptionTypeDTO";
 import { PaymentPopup } from "@src/shared/Payment/PaymentPopup";
+import { ResponseError } from "@src/api";
 interface RoadNetworkViewProps {
     subscriptionTypes: SubscriptionTypeDTO[];
     subscriptions: SubscriptionDTO[];
     handleBuySubscriptionButtonClicked: () => Promise<void>;
     handleBuySubscriptionFormSubmitted: (
-        subscription: SubscriptionDTO
-    ) => Promise<void>;
+        subscriptionTypeDTO: SubscriptionTypeDTO,
+        blickNumber: number
+    ) => Promise<any>;
 }
 export const SubscriptionView = ({
     subscriptions,
@@ -42,7 +44,7 @@ export const SubscriptionView = ({
     const [chosenSubscriptionTypeIdx, setChosenSubscriptionTypeIdx] =
         React.useState<number | undefined>();
 
-	const [paymentPopupOpen, setPaymentPopupOpen] = React.useState(false)
+    const [paymentPopupOpen, setPaymentPopupOpen] = React.useState(false);
 
     const errorAlert = (
         <Alert
@@ -50,7 +52,7 @@ export const SubscriptionView = ({
             severity="error"
             sx={{ width: "100%" }}
         >
-            Nie wybrano żadnego abonamentu!
+            Nie udało się opłacić abonamentu!
         </Alert>
     );
 
@@ -70,29 +72,37 @@ export const SubscriptionView = ({
         ] as SubscriptionTypeDTO;
 
         if (chosenSubscription) {
-            const today = new Date();
-            handleBuySubscriptionFormSubmitted({
-                id: Math.floor(Math.random() * 1000 + 1),
-                to: new Date(
-                    today.setMonth(today.getMonth() + chosenSubscription.period)
-                ),
-                type: chosenSubscription,
-            }).then(() => {
-				setPaymentPopupOpen(true)
-            });
+            setPaymentPopupOpen(true);
         } else {
             setSnackbarOpen(true);
             setAlert(errorAlert);
         }
     };
 
-	const handlePaymentComplete = () => {
-		setPaymentPopupOpen(false)
-		setChosenSubscriptionTypeIdx(undefined);
-		setDisplayForm(false);
-		setSnackbarOpen(true);
-		setAlert(successAlert);
-	}
+    const handlePaymentComplete = (blik: number) => {
+        setPaymentPopupOpen(false);
+        const chosenSubscription: SubscriptionTypeDTO = subscriptionTypes[
+            chosenSubscriptionTypeIdx as number
+        ] as SubscriptionTypeDTO;
+        handleBuySubscriptionFormSubmitted(chosenSubscription, blik)
+            .then(() => {
+                setChosenSubscriptionTypeIdx(undefined);
+                setSnackbarOpen(true);
+                setAlert(successAlert);
+                setDisplayForm(false);
+            })
+            .catch((err: ResponseError) => {
+                if (err.message === "Response returned an error code") {
+                    setSnackbarOpen(true);
+                    setAlert(errorAlert);
+                } else {
+                    setChosenSubscriptionTypeIdx(undefined);
+                    setSnackbarOpen(true);
+                    setAlert(successAlert);
+                    setDisplayForm(false);
+                }
+            });
+    };
 
     return (
         <>
@@ -125,10 +135,10 @@ export const SubscriptionView = ({
                                         {s.to?.toLocaleDateString()}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {s.type.name}
+                                        {s.type?.name}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {s.type.price + " zł"}
+                                        {s.type?.price + " zł"}
                                     </TableCell>
                                 </TableRow>
                             )
@@ -228,14 +238,16 @@ export const SubscriptionView = ({
             ) : (
                 <></>
             )}
-			{
-				paymentPopupOpen && <PaymentPopup
-					open={paymentPopupOpen}
-					amount={subscriptionTypes[chosenSubscriptionTypeIdx!!].price}
-					onClose={() => setPaymentPopupOpen(false)}
-					onPaymentComplete={handlePaymentComplete}
-				/>
-			}
+            {paymentPopupOpen && (
+                <PaymentPopup
+                    open={paymentPopupOpen}
+                    amount={
+                        subscriptionTypes[chosenSubscriptionTypeIdx!!].price
+                    }
+                    onClose={() => setPaymentPopupOpen(false)}
+                    onPaymentComplete={handlePaymentComplete}
+                />
+            )}
         </>
     );
 };

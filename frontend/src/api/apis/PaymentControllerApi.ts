@@ -33,6 +33,11 @@ export interface GetPaymentListRequest {
     userId: string;
 }
 
+export interface MakePaymentRequest {
+    id: number;
+    body: string;
+}
+
 /**
  *
  */
@@ -230,5 +235,66 @@ export class PaymentControllerApi extends runtime.BaseAPI {
     ): Promise<Array<TollDTO>> {
         const response = await this.getToolRaw(initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Make the payment. Payment and code can not be NULL.
+     */
+    async makePaymentRaw(
+        requestParameters: MakePaymentRequest,
+        initOverrides?: RequestInit | runtime.InitOverrideFunction
+    ): Promise<runtime.ApiResponse<void>> {
+        if (
+            requestParameters.id === null ||
+            requestParameters.id === undefined
+        ) {
+            throw new runtime.RequiredError(
+                "id",
+                "Required parameter requestParameters.id was null or undefined when calling makePayment."
+            );
+        }
+
+        if (
+            requestParameters.body === null ||
+            requestParameters.body === undefined
+        ) {
+            throw new runtime.RequiredError(
+                "body",
+                "Required parameter requestParameters.body was null or undefined when calling makePayment."
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters["Content-Type"] = "application/json";
+
+        const response = await this.request(
+            {
+                path: `/makePayment/{id}`.replace(
+                    `{${"id"}}`,
+                    encodeURIComponent(String(requestParameters.id))
+                ),
+                method: "PUT",
+                headers: headerParameters,
+                query: queryParameters,
+                body: requestParameters.body as any,
+            },
+            initOverrides
+        );
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Make the payment. Payment and code can not be NULL.
+     */
+    async makePayment(
+        id: number,
+        body: string,
+        initOverrides?: RequestInit | runtime.InitOverrideFunction
+    ): Promise<void> {
+        await this.makePaymentRaw({ id: id, body: body }, initOverrides);
     }
 }

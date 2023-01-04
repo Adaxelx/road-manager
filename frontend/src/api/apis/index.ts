@@ -3,3 +3,4 @@
 export * from "./DriveControllerApi";
 export * from "./PaymentControllerApi";
 export * from "./RoadNetworkControllerApi";
+export * from "./SubscriptionControllerApi";
