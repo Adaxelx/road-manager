@@ -5,13 +5,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import * as React from "react";
 
 import { PaymentDTO } from "@api/models/PaymentDTO";
+import { Button } from "@mui/material";
 interface PaymentsViewProps {
     payments: PaymentDTO[];
+	handlePayment: (payment: PaymentDTO) => void
 }
-export const PaymentsView = ({ payments }: PaymentsViewProps) => {
+export const PaymentsView = ({ payments, handlePayment }: PaymentsViewProps) => {
     return (
         <>
             <h1>Opłaty</h1>
@@ -41,7 +42,7 @@ export const PaymentsView = ({ payments }: PaymentsViewProps) => {
                                     {p.price + " zł"}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {p.paid ? "Tak" : "Nie"}
+                                    {p.paid ? "Tak" : <Button onClick={() => handlePayment(p)}>Opłać</Button>}
                                 </TableCell>
                             </TableRow>
                         ))}

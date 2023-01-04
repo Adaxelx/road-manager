@@ -2,8 +2,10 @@
 apis/DriveControllerApi.ts
 apis/PaymentControllerApi.ts
 apis/RoadNetworkControllerApi.ts
+apis/SubscriptionControllerApi.ts
 apis/index.ts
 index.ts
+models/AppUser.ts
 models/Junction.ts
 models/JunctionDTO.ts
 models/Passage.ts
@@ -12,6 +14,9 @@ models/PaymentDTO.ts
 models/RoadDTO.ts
 models/RoadNetworkDTO.ts
 models/RoadSegmentDTO.ts
+models/SubscriptionDTO.ts
+models/SubscriptionPaymentDTO.ts
+models/SubscriptionTypeDTO.ts
 models/TollDTO.ts
 models/VehicleDTO.ts
 models/VehicleTollDTO.ts
