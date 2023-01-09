@@ -24,12 +24,8 @@ export const PaymentsView = ({ payments, handlePayment }: PaymentsViewProps) => 
                 >
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Data</TableCell>
                             <TableCell align="center">Kwota</TableCell>
                             <TableCell align="center">Czy opłacono?</TableCell>
-                            {/*<TableCell align="center">*/}
-                            {/*    Nr. rejestracyjny*/}
-                            {/*</TableCell>*/}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -43,17 +39,11 @@ export const PaymentsView = ({ payments, handlePayment }: PaymentsViewProps) => 
                                 }}
                             >
                                 <TableCell align="center">
-                                    {p.passage?.date?.toLocaleDateString()}
-                                </TableCell>
-                                <TableCell align="center">
                                     {p.price + " zł"}
                                 </TableCell>
                                 <TableCell align="center">
                                     {p.paid ? "Tak" : <Button onClick={() => handlePayment(p)}>Opłać</Button>}
                                 </TableCell>
-                                {/*<TableCell align="center">*/}
-                                {/*    {p.passage?.registrationNumber}*/}
-                                {/*</TableCell>*/}
                             </TableRow>
                         ))}
                     </TableBody>

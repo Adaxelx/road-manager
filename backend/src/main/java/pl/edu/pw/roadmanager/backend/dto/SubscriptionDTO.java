@@ -4,18 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pw.roadmanager.backend.domain.Passage;
+import pl.edu.pw.roadmanager.backend.domain.SubscriptionType;
+
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentDTO {
+public class SubscriptionDTO {
     private Long id;
 
-    private Boolean paid;
+    private Date to;
 
-    private float price;
-
-    private Long passage_id;
+    private SubscriptionType type;
 }

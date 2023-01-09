@@ -1,5 +1,6 @@
 package pl.edu.pw.roadmanager.backend.services;
 
+import pl.edu.pw.roadmanager.backend.domain.Payment;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.TollDTO;
 
@@ -13,5 +14,8 @@ public interface PaymentAPI {
 
     void addPayment(PaymentDTO paymentDTO);
 
-    List<PaymentDTO> getPaymentList(String userId);
+    List<Payment> getPaymentList(String userId);
+
+    void makePayment(Long id, Integer code);
+
 }

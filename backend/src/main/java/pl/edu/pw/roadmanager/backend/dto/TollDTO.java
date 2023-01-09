@@ -16,7 +16,7 @@ public class TollDTO {
 
     private String name;
 
-    private List<VehicleTollDTO> vehicleTollDTOS;
+    private List<VehicleTollDTO> vehicleTolls;
 
     private List<Long> roadSegments;
 }

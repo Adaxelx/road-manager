@@ -104,6 +104,11 @@ export const SubscriptionView = ({
             });
     };
 
+    const handleBuyClicked = () => {
+        handleBuySubscriptionButtonClicked();
+        setDisplayForm(true);
+    };
+
     return (
         <>
             <h1>Abonamenty</h1>
@@ -149,10 +154,7 @@ export const SubscriptionView = ({
                                     sx={{ mt: 2 }}
                                     size="small"
                                     color="success"
-                                    onClick={() => {
-                                        handleBuySubscriptionButtonClicked();
-                                        setDisplayForm(true);
-                                    }}
+                                    onClick={handleBuyClicked}
                                 >
                                     Wykup abonament
                                 </Button>

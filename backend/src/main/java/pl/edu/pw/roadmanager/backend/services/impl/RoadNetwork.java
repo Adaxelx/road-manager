@@ -1,6 +1,7 @@
 package pl.edu.pw.roadmanager.backend.services.impl;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import pl.edu.pw.roadmanager.backend.repositories.RoadSegmentRepository;
 import pl.edu.pw.roadmanager.backend.repositories.TollRepository;
 import pl.edu.pw.roadmanager.backend.services.RoadNetworkAPI;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +61,8 @@ public class RoadNetwork implements RoadNetworkAPI {
 
             if (s.getId() != null) {
                 roadSegment = roadSegmentRepository.findById(s.getId()).orElseThrow(() -> new NotFoundException("Road segment not found."));
+                roadSegment.setStart(null);
+                roadSegment.setEnd(null);
             }
             if (s.getStart().getId() != null) {
                 start = junctionRepository.findById(s.getStart().getId()).orElseThrow(() -> new NotFoundException("Segments start junction not found."));
@@ -85,8 +89,24 @@ public class RoadNetwork implements RoadNetworkAPI {
 
     @Override
     public RoadNetworkDTO getRoadNetwork() {
-        RoadNetworkDTO roadNetworkDTO = modelMapper.map(roadRepository.findById(1L), RoadNetworkDTO.class);
+        List<RoadDTO> roadDTOS;
+        Type listType = new TypeToken<List<RoadDTO>>(){}.getType();
+        List<Toll> tolls = tollRepository.findAll();
 
-        return roadNetworkDTO;
+        roadDTOS = modelMapper.map(roadRepository.findAll(), listType);
+
+        roadDTOS.forEach(roadDTO -> {
+            roadDTO.getSegments().forEach(s -> {
+                tolls.forEach(t -> {
+                    t.getSegments().forEach(seg -> {
+                        if (seg.getId().equals(s.getId())) {
+                            s.setToolId(t.getId());
+                        }
+                    });
+                });
+            });
+        });
+
+        return new RoadNetworkDTO(roadDTOS);
     }
 }

@@ -41,3 +41,294 @@ INSERT INTO "PUBLIC"."APP_USER"("ID","EMAIL","FIRST_NAME","LAST_NAME","PHONE_NUM
 2022-12-03 16:11:26 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM PASSAGE TOLL [*]VEHICLE VEHICLE_TOLL"; SQL statement:
 SELECT * FROM PASSAGE TOLL VEHICLE VEHICLE_TOLL [42000-214]
+2022-12-16 19:45:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        type bigint,\000d\000a        user bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        type bigint,
+        user bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:45:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:45:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKc8737kn6jbc5nttyb4r5k685u 
+       foreign key (type) 
+       references subscriptio [42102-214]
+2022-12-16 19:45:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    alter table subscription \000d\000a       add constraint FKcqflwif35jmdgamwdmkfyet3m \000d\000a       foreign key ([*]user) \000d\000a       references app_user"; expected "identifier"; SQL statement:
+
+    alter table subscription 
+       add constraint FKcqflwif35jmdgamwdmkfyet3m 
+       foreign key (user) 
+       references app_user [42001-214]
+2022-12-16 19:48:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        type bigint,\000d\000a        user bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        type bigint,
+        user bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:48:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:48:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKc8737kn6jbc5nttyb4r5k685u 
+       foreign key (type) 
+       references subscriptio [42102-214]
+2022-12-16 19:48:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    alter table subscription \000d\000a       add constraint FKcqflwif35jmdgamwdmkfyet3m \000d\000a       foreign key ([*]user) \000d\000a       references app_user"; expected "identifier"; SQL statement:
+
+    alter table subscription 
+       add constraint FKcqflwif35jmdgamwdmkfyet3m 
+       foreign key (user) 
+       references app_user [42001-214]
+2022-12-16 19:52:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        subscription_type bigint,\000d\000a        app_user bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        subscription_type bigint,
+        app_user bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:52:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:52:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKewl8vfg4e9esei235v2u4tudt 
+       foreign key (subscription_type) 
+       references subscriptio [42102-214]
+2022-12-16 19:52:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKol6cyu1h52gf35f3uscplj20d 
+       foreign key (app_user) 
+       references ap [42102-214]
+2022-12-16 19:55:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        subscription_type_id bigint,\000d\000a        app_user_id bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        subscription_type_id bigint,
+        app_user_id bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:55:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:55:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FK8mltpw5ur3yf5nw2d7t4rnxc6 
+       foreign key (subscription_type_id) 
+       references subscriptio [42102-214]
+2022-12-16 19:55:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKev7r3t3oj2xryhm6bwggwhgxj 
+       foreign key (app_user_id) 
+       references ap [42102-214]
+2022-12-16 19:59:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        app_user_id bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        app_user_id bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:59:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 19:59:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKev7r3t3oj2xryhm6bwggwhgxj 
+       foreign key (app_user_id) 
+       references ap [42102-214]
+2022-12-16 20:02:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:02:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:06:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:06:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:09:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        to timestamp not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        to timestamp not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:09:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:14:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:16:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription_type (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        type varchar(255) not null,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription_type (
+       id bigint not null,
+        from timestamp not null,
+        type varchar(255) not null,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:22:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM SUBSCRIPTION_TYPE SUBSCRIPTION [*]SUBSCRIPTION_TYPE"; SQL statement:
+SELECT * FROM SUBSCRIPTION_TYPE SUBSCRIPTION SUBSCRIPTION_TYPE [42000-214]
+2022-12-16 20:24:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]from timestamp not null,\000d\000a        subscription_type_id bigint,\000d\000a        app_user_id bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        from timestamp not null,
+        subscription_type_id bigint,
+        app_user_id bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:24:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FK8mltpw5ur3yf5nw2d7t4rnxc6 
+       foreign key (subscription_type_id) 
+       references subscriptio [42102-214]
+2022-12-16 20:24:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKev7r3t3oj2xryhm6bwggwhgxj 
+       foreign key (app_user_id) 
+       references ap [42102-214]
+2022-12-16 20:25:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    create table subscription (\000d\000a       id bigint not null,\000d\000a        [*]to timestamp not null,\000d\000a        subscription_type_id bigint,\000d\000a        app_user_id bigint,\000d\000a        primary key (id)\000d\000a    )"; expected "identifier"; SQL statement:
+
+    create table subscription (
+       id bigint not null,
+        to timestamp not null,
+        subscription_type_id bigint,
+        app_user_id bigint,
+        primary key (id)
+    ) [42001-214]
+2022-12-16 20:25:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FK8mltpw5ur3yf5nw2d7t4rnxc6 
+       foreign key (subscription_type_id) 
+       references subscriptio [42102-214]
+2022-12-16 20:25:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUBSCRIPTION" not found; SQL statement:
+
+    alter table subscription 
+       add constraint FKev7r3t3oj2xryhm6bwggwhgxj 
+       foreign key (app_user_id) 
+       references ap [42102-214]
+2022-12-17 19:27:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]SUBSCRIPTION_TYPE"; expected "SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
+SUBSCRIPTION_TYPE [42001-214]
+2023-01-02 20:31:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO APP_USER VALUES (1, [*])"; expected "DEFAULT, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+INSERT INTO APP_USER VALUES (1, ) [42001-214]

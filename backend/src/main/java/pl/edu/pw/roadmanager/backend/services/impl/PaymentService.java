@@ -6,21 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
-import pl.edu.pw.roadmanager.backend.domain.*;
+import pl.edu.pw.roadmanager.backend.domain.Payment;
+import pl.edu.pw.roadmanager.backend.domain.Toll;
+import pl.edu.pw.roadmanager.backend.domain.VehicleToll;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.TollDTO;
-import pl.edu.pw.roadmanager.backend.repositories.PaymentRepository;
-import pl.edu.pw.roadmanager.backend.repositories.RoadSegmentRepository;
-import pl.edu.pw.roadmanager.backend.repositories.TollRepository;
-import pl.edu.pw.roadmanager.backend.repositories.VehicleTollRepository;
+import pl.edu.pw.roadmanager.backend.repositories.*;
+import pl.edu.pw.roadmanager.backend.services.PayUAPI;
 import pl.edu.pw.roadmanager.backend.services.PaymentAPI;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
-public class TollPayment implements PaymentAPI {
+public class PaymentService implements PaymentAPI {
 
     @Autowired
     ModelMapper modelMapper;
@@ -32,12 +33,14 @@ public class TollPayment implements PaymentAPI {
     VehicleTollRepository vehicleTollRepository;
 
     @Autowired
-    RoadSegmentRepository roadSegmentRepository;
-
-    @Autowired
     PaymentRepository paymentRepository;
 
-    @Transactional
+    @Autowired
+    private PayUAPI payU;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
+
     @Override
     public void addOrEditToll(TollDTO tollDTO) {
         Toll toll = new Toll();
@@ -48,11 +51,12 @@ public class TollPayment implements PaymentAPI {
 
         toll.setName(tollDTO.getName());
 
-        tollDTO.getVehicleTollDTOS().forEach(vt -> {
+        tollDTO.getVehicleTolls().forEach(vt -> {
             VehicleToll vehicleToll = new VehicleToll();
 
             if (vt.getId() != null) {
                 vehicleToll = vehicleTollRepository.findById(vt.getId()).orElseThrow(() -> new NotFoundException("Vehicle toll not found."));
+                vehicleToll.setToll(null);
             }
 
             modelMapper.map(vt, vehicleToll);
@@ -63,15 +67,27 @@ public class TollPayment implements PaymentAPI {
 
         Toll finalToll = toll;
         vehicleTolls.forEach(vt -> vt.setToll(finalToll));
-        vehicleTollRepository.saveAll(vehicleTolls);
+        tollRepository.save(finalToll);
     }
 
     @Override
     public List<TollDTO> getTollList() {
-        Type listType = new TypeToken<List<TollDTO>>() {
-        }.getType();
+        Type listType = new TypeToken<List<TollDTO>>(){}.getType();
+        List<Toll> tolls = tollRepository.findAll();
+        List<List<Long>> segmentsId = new ArrayList<>();
+        tolls.forEach(t -> {
+            List<Long> ids = new ArrayList<>();
+            t.getSegments().forEach(s -> {
+                ids.add(s.getId());
+            });
+            segmentsId.add(ids);
+        });
+        List<TollDTO> mappedTolls = modelMapper.map(tolls, listType);
+        for (int i = 0; i < segmentsId.size(); i++) {
+            mappedTolls.get(i).setRoadSegments(segmentsId.get(i));
+        }
 
-        return modelMapper.map(tollRepository.findAll(), listType);
+        return mappedTolls;
     }
 
     @Override
@@ -86,11 +102,24 @@ public class TollPayment implements PaymentAPI {
     }
 
     @Override
-    public List<PaymentDTO> getPaymentList(String userId) {
-        Type listType = new TypeToken<List<PaymentDTO>>() {
-        }.getType();
+    public List<Payment> getPaymentList(String userId) {
+        return paymentRepository.findAll();
+    }
 
-        return modelMapper.map(paymentRepository.findAll(), listType);
+    @Override
+    public void makePayment(Long id, Integer code) {
 
+        Payment payment = paymentRepository.findById(id).orElseThrow(() -> new NotFoundException("Payment not found"));
+
+        if (!payment.getPaid()) {
+            if (payU.makePayment(code)) {
+                payment.setPaid(true);
+                paymentRepository.save(payment);
+            } else {
+                throw new RuntimeException();
+            }
+        } else {
+            throw new IllegalArgumentException("User already paid for the payment");
+        }
     }
 }
