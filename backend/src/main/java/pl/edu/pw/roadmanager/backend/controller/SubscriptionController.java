@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.dto.SubscriptionPaymentDTO;
 import pl.edu.pw.roadmanager.backend.services.SubscriptionAPI;
@@ -42,7 +39,7 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "400", description = "Invalid data.",
                     content = @Content) })
     @PostMapping("/addSubscription")
-    public ResponseEntity<?> addSubscription(SubscriptionPaymentDTO subscriptionPaymentDTO) {
+    public ResponseEntity<?> addSubscription(@RequestBody SubscriptionPaymentDTO subscriptionPaymentDTO) {
 
         try {
             subscriptionAPI.addSubscription(subscriptionPaymentDTO);
