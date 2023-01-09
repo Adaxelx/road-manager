@@ -19,7 +19,7 @@ type PaymentPopupProps = {
     open: boolean;
     amount: number;
     onClose: () => void;
-    onPaymentComplete: (blikCode: number) => void;
+    onPaymentComplete: (blikCode: string) => void;
 };
 
 export const PaymentPopup: FC<PaymentPopupProps> = ({
@@ -62,7 +62,7 @@ export const PaymentPopup: FC<PaymentPopupProps> = ({
 
     const handlePaymentClick = () => {
         // "Redirect" here
-        onPaymentComplete(parseInt(blikCode));
+        onPaymentComplete(blikCode);
     };
 
     return (

@@ -15,40 +15,7 @@ export const PaymentsPresenter = () => {
         React.useState<PaymentDTO | null>(null);
 
     useEffect(() => {
-        setPayments([
-            {
-                id: 1,
-                paid: false,
-                passage: {
-                    date: new Date(),
-                },
-                price: 100,
-            },
-            {
-                id: 2,
-                paid: false,
-                passage: {
-                    date: new Date(),
-                },
-                price: 59.99,
-            },
-            {
-                id: 3,
-                paid: true,
-                passage: {
-                    date: new Date(),
-                },
-                price: 49.99,
-            },
-            {
-                id: 4,
-                paid: false,
-                passage: {
-                    date: new Date(),
-                },
-                price: 10,
-            },
-        ]);
+        loadPayments()
     }, []);
 
     const loadPayments = async () =>
@@ -61,6 +28,7 @@ export const PaymentsPresenter = () => {
     };
 
     const handlePaymentComplete = (blik: string) => {
+        paymentsApi.makePayment(currentPayment!.id!, blik)
         currentPayment!!.paid = true;
         setPayments([...payments]);
         console.log(payments);
