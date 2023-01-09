@@ -11,7 +11,8 @@ import pl.edu.pw.roadmanager.backend.domain.SubscriptionType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubscriptionPaymentDTO {
-    private SubscriptionType SubscriptionType;
 
-    private int blickNumber;
+    private SubscriptionType subscriptionType;
+
+    private Integer blickNumber;
 }

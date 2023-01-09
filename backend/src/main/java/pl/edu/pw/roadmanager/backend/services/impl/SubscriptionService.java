@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.roadmanager.backend.domain.AppUser;
 import pl.edu.pw.roadmanager.backend.domain.Subscription;
+import pl.edu.pw.roadmanager.backend.domain.SubscriptionType;
 import pl.edu.pw.roadmanager.backend.dto.SubscriptionDTO;
 import pl.edu.pw.roadmanager.backend.dto.SubscriptionPaymentDTO;
 import pl.edu.pw.roadmanager.backend.dto.SubscriptionTypeDTO;
@@ -20,6 +21,7 @@ import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubscriptionService implements SubscriptionAPI {
@@ -58,13 +60,14 @@ public class SubscriptionService implements SubscriptionAPI {
 
         if (subscriptionPaymentDTO != null) {
             PayU payU = new PayU();
+            Optional<SubscriptionType> subscriptionType = subscriptionTypeRepository.findById(subscriptionPaymentDTO.getSubscriptionType().getId());
             boolean payUResponse = payU.makePayment(subscriptionPaymentDTO.getBlickNumber());
-            if (payUResponse) {
+            if (payUResponse && subscriptionType.isPresent()) {
                 AppUser appUser = appUserRepository.getReferenceById(1L);
                 Date endDate = getEndDate(subscriptionPaymentDTO.getSubscriptionType().getPeriod(), appUser);
 
                 Subscription subscription = new Subscription();
-                subscription.setType(subscriptionPaymentDTO.getSubscriptionType());
+                subscription.setType(subscriptionType.get());
                 subscription.setUser(appUser);
                 subscription.setTo(endDate);
                 subscriptionRepository.save(subscription);
