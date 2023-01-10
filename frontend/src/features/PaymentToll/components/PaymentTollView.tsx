@@ -27,7 +27,7 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
 						<Card>
 							<CardContent>
 								<Typography variant="h5">{toll.name}</Typography>
-								<Typography>Sieć drogowa: {props.roads.find(x => JSON.stringify(x.segments?.map(x => x.id)) === JSON.stringify(toll.roadSegments))!.name}</Typography>
+								<Typography>Sieć drogowa: {props.roads.find(x => JSON.stringify(x.segments?.map(x => x.id)) === JSON.stringify(toll.roadSegments))?.name}</Typography>
 
 								<Table>
 									<TableHead>
