@@ -1,23 +1,25 @@
 import { Box, Button, Card, CardActions, CardContent, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { RoadDTO } from "@src/api";
 import { TollDTO } from "@src/api/models/TollDTO";
 
 interface PaymentTollViewProps {
-    tolls: TollDTO[];
+	tolls: TollDTO[];
+	roads: RoadDTO[];
 	handleEditTollClick: (toll: TollDTO) => void
 	handleAddTollClick: () => void
 }
 
 
 export const PaymentTollView = (props: PaymentTollViewProps) => {
-    return (
-        <main
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
-        >
-            <h1>Taryfy</h1>
+	return (
+		<main
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+			}}
+		>
+			<h1>Taryfy</h1>
 
 			<Grid container gap={1}>{
 				props.tolls.map(toll =>
@@ -25,7 +27,8 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
 						<Card>
 							<CardContent>
 								<Typography variant="h5">{toll.name}</Typography>
-								
+								<Typography>Sieć drogowa: {props.roads.find(x => JSON.stringify(x.segments?.map(x => x.id)) === JSON.stringify(toll.roadSegments))!.name}</Typography>
+
 								<Table>
 									<TableHead>
 										<TableRow>
@@ -45,7 +48,7 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
 									</TableBody>
 								</Table>
 							</CardContent>
-							<CardActions style={{justifyContent: "center"}}>
+							<CardActions style={{ justifyContent: "center" }}>
 								<Button
 									onClick={() => props.handleEditTollClick(toll)}
 								>
@@ -72,6 +75,6 @@ export const PaymentTollView = (props: PaymentTollViewProps) => {
 					Dodaj taryfikator
 				</Button>
 			</Box>
-        </main>
-    );
+		</main>
+	);
 };
