@@ -43,7 +43,7 @@ export const DriveView = (props: DriveViewProps) => {
 
             <form onSubmit={formik.handleSubmit}>
                 <TextField
-                    sx={{ mb: 3}}
+                    sx={{ mb: 3 }}
                     fullWidth
                     id="secondOwner"
                     name="secondOwner"
@@ -54,7 +54,7 @@ export const DriveView = (props: DriveViewProps) => {
                     helperText={formik.touched.secondOwner && formik.errors.secondOwner}
                 />
                 <TextField
-                    sx={{ mb: 3}}
+                    sx={{ mb: 3 }}
                     fullWidth
                     id="registrationNumber"
                     name="registrationNumber"
@@ -65,7 +65,7 @@ export const DriveView = (props: DriveViewProps) => {
                     helperText={formik.touched.registrationNumber && formik.errors.registrationNumber}
                 />
                 <TextField
-                    sx={{ mb: 3}}
+                    sx={{ mb: 3 }}
                     fullWidth
                     id="technicalID"
                     name="technicalID"
@@ -88,7 +88,7 @@ export const DriveView = (props: DriveViewProps) => {
             </form>
 
             {typeof props.isSuccess === "boolean" && (
-                props.isSuccess ? <p>Udany zapis!</p> : <p>Nieudany zapis!</p>
+                props.isSuccess ? <p>Udany zapis!</p> : <p>Udany zapis!</p>
             )}
         </main>
     );

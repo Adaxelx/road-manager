@@ -16,6 +16,6 @@ public interface PaymentAPI {
 
     List<Payment> getPaymentList(String userId);
 
-    void makePayment(Long id, Integer code);
+    void makePayment(Long id, String code);
 
 }

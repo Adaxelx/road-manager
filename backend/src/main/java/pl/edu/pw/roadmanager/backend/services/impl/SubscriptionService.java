@@ -60,8 +60,9 @@ public class SubscriptionService implements SubscriptionAPI {
 
         if (subscriptionPaymentDTO != null) {
             PayU payU = new PayU();
-            Optional<SubscriptionType> subscriptionType = subscriptionTypeRepository.findById(subscriptionPaymentDTO.getSubscriptionType().getId());
-            boolean payUResponse = payU.makePayment(subscriptionPaymentDTO.getBlickNumber());
+            Optional<SubscriptionType> subscriptionType = subscriptionTypeRepository
+                    .findById(subscriptionPaymentDTO.getSubscriptionType().getId());
+            boolean payUResponse = payU.makePayment(subscriptionPaymentDTO.getBlickNumber().toString());
             if (payUResponse && subscriptionType.isPresent()) {
                 AppUser appUser = appUserRepository.getReferenceById(1L);
                 Date endDate = getEndDate(subscriptionPaymentDTO.getSubscriptionType().getPeriod(), appUser);
@@ -87,6 +88,7 @@ public class SubscriptionService implements SubscriptionAPI {
             Date latest = subscriptions.get(0).getTo();
             now = now.compareTo(latest) > 0 ? now : latest;
         }
-        return java.sql.Timestamp.valueOf(LocalDateTime.from(now.toInstant().atZone(ZoneId.of("UTC"))).plusDays(period));
+        return java.sql.Timestamp
+                .valueOf(LocalDateTime.from(now.toInstant().atZone(ZoneId.of("UTC"))).plusDays(period));
     }
 }

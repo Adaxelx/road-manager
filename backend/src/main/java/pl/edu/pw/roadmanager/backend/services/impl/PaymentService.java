@@ -55,7 +55,8 @@ public class PaymentService implements PaymentAPI {
             VehicleToll vehicleToll = new VehicleToll();
 
             if (vt.getId() != null) {
-                vehicleToll = vehicleTollRepository.findById(vt.getId()).orElseThrow(() -> new NotFoundException("Vehicle toll not found."));
+                vehicleToll = vehicleTollRepository.findById(vt.getId())
+                        .orElseThrow(() -> new NotFoundException("Vehicle toll not found."));
                 vehicleToll.setToll(null);
             }
 
@@ -72,7 +73,8 @@ public class PaymentService implements PaymentAPI {
 
     @Override
     public List<TollDTO> getTollList() {
-        Type listType = new TypeToken<List<TollDTO>>(){}.getType();
+        Type listType = new TypeToken<List<TollDTO>>() {
+        }.getType();
         List<Toll> tolls = tollRepository.findAll();
         List<List<Long>> segmentsId = new ArrayList<>();
         tolls.forEach(t -> {
@@ -94,7 +96,8 @@ public class PaymentService implements PaymentAPI {
     public void addPayment(PaymentDTO paymentDTO) {
         Payment payment = new Payment();
         if (paymentDTO.getId() != null) {
-            payment = paymentRepository.findById(paymentDTO.getId()).orElseThrow(() -> new NotFoundException("Payment not found."));
+            payment = paymentRepository.findById(paymentDTO.getId())
+                    .orElseThrow(() -> new NotFoundException("Payment not found."));
         }
 
         modelMapper.map(paymentDTO, payment);
@@ -107,7 +110,7 @@ public class PaymentService implements PaymentAPI {
     }
 
     @Override
-    public void makePayment(Long id, Integer code) {
+    public void makePayment(Long id, String code) {
 
         Payment payment = paymentRepository.findById(id).orElseThrow(() -> new NotFoundException("Payment not found"));
 

@@ -1,29 +1,33 @@
-import { Alert, Box, Button, Paper, Snackbar, TextField } from "@mui/material"
+import { Alert, Box, Button, InputLabel, MenuItem, Paper, Select, Snackbar, TextField } from "@mui/material"
+import { RoadDTO } from "@src/api"
 import { TollDTO } from "@src/api/models/TollDTO"
-import {VehicleTollDTO, VehicleTollDTOVehicleTypeEnum} from "@src/api/models/VehicleTollDTO"
+import { VehicleTollDTO, VehicleTollDTOVehicleTypeEnum } from "@src/api/models/VehicleTollDTO"
 import React from "react"
 import { PaymentTollEditVehicleTollItem } from "./PaymentTollEditVehicleTollItem"
 
 type PaymentTollEditViewProps = {
 	toll: TollDTO
+	roads: RoadDTO[]
 	handleSaveEditedTollClick: (toll: TollDTO) => void
 	handleDismissEditViewClick: () => void
 }
 
 export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 	toll,
+	roads,
 	handleDismissEditViewClick,
 	handleSaveEditedTollClick
 }) => {
 	const [tollName, setTollName] = React.useState(toll.name ?? "")
+	const [roadSegments, setRoadSegments] = React.useState((toll.roadSegments ?? []).length === 0 ? roads[0].segments!.map(x => x.id!) : toll.roadSegments)
 	const [vehicleTolls, setVehicleTolls] = React.useState(toll.vehicleTolls ?? [])
 	const [error, setError] = React.useState("")
-	
+
 	const handleVehicleTollTypeChange = (vt: VehicleTollDTO, newType: VehicleTollDTOVehicleTypeEnum) => {
 		vt.vehicleType = newType
 		setVehicleTolls([...vehicleTolls])
 	}
-	
+
 	const handleVehicleTollPriceChange = (vt: VehicleTollDTO, newPrice: number) => {
 		vt.pricePerKilometer = newPrice
 		setVehicleTolls([...vehicleTolls])
@@ -55,7 +59,7 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 
 		for (const vt of vehicleTolls) {
 			const i = vehicleTolls.indexOf(vt) + 1
-			
+
 			if (!Object.values(VehicleTollDTOVehicleTypeEnum).includes(vt.vehicleType as any)) {
 				setError(`Taryfa #${i}: typ samochodu musi być wybrany`)
 				return
@@ -68,7 +72,8 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 		handleSaveEditedTollClick({
 			...toll,
 			name: tollName,
-			vehicleTolls: vehicleTolls
+			vehicleTolls: vehicleTolls,
+			roadSegments: roadSegments
 		})
 	}
 
@@ -83,11 +88,29 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 				onChange={(e) => setTollName(e.target.value)}
 			/>
 
+			<InputLabel id="type-label" sx={{ textAlign: 'left' }}>Sieć drogowa</InputLabel>
+			<Select
+				fullWidth
+				sx={{ textAlign: 'left' }}
+				labelId="type-label"
+				label="Sieć drogowa"
+				value={roads.find(x => JSON.stringify(x.segments?.map(x => x.id)) === JSON.stringify(roadSegments))!.name}
+				onChange={(e) => setRoadSegments(roads.find(x => x.name === e.target.value)!.segments!.map(x => x.id!))}
+			>
+				{
+					roads.map(road =>
+						<MenuItem key={road.id} value={road.name}>
+							{road.name}
+						</MenuItem>
+					)
+				}
+			</Select>
+
 			<h2>Taryfy</h2>
 
 			<Paper>
 				{
-					vehicleTolls.map((vehicleToll, i) => 
+					vehicleTolls.map((vehicleToll, i) =>
 						<PaymentTollEditVehicleTollItem
 							vehicleToll={vehicleToll}
 							handleVehicleTollTypeChange={handleVehicleTollTypeChange}
@@ -98,7 +121,7 @@ export const PaymentTollEditView: React.FC<PaymentTollEditViewProps> = ({
 						/>
 					)
 				}
-				
+
 				<Box style={{
 					display: "flex",
 					justifyContent: "center",
