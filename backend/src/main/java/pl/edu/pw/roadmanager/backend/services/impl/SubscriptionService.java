@@ -62,7 +62,7 @@ public class SubscriptionService implements SubscriptionAPI {
             PayU payU = new PayU();
             Optional<SubscriptionType> subscriptionType = subscriptionTypeRepository
                     .findById(subscriptionPaymentDTO.getSubscriptionType().getId());
-            boolean payUResponse = payU.makePayment(subscriptionPaymentDTO.getBlickNumber().toString());
+            boolean payUResponse = payU.makePayment(subscriptionPaymentDTO.getBlickNumber());
             if (payUResponse && subscriptionType.isPresent()) {
                 AppUser appUser = appUserRepository.getReferenceById(1L);
                 Date endDate = getEndDate(subscriptionPaymentDTO.getSubscriptionType().getPeriod(), appUser);
