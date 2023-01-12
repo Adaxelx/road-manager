@@ -14,5 +14,5 @@ public class SubscriptionPaymentDTO {
 
     private SubscriptionType subscriptionType;
 
-    private Integer blickNumber;
+    private String blickNumber;
 }
