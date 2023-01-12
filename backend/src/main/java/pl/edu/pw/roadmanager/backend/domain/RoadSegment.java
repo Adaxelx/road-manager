@@ -33,7 +33,7 @@ public class RoadSegment {
     @ManyToMany(mappedBy = "segments")
     private List<Road> roads;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToOne
     @JoinColumn(name = "toll_id")
     private Toll toll;
 }

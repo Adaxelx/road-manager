@@ -4,9 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 import pl.edu.pw.roadmanager.backend.domain.Payment;
+import pl.edu.pw.roadmanager.backend.domain.RoadSegment;
 import pl.edu.pw.roadmanager.backend.domain.Toll;
 import pl.edu.pw.roadmanager.backend.domain.VehicleToll;
 import pl.edu.pw.roadmanager.backend.dto.PaymentDTO;
@@ -18,22 +18,24 @@ import pl.edu.pw.roadmanager.backend.services.PaymentAPI;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class PaymentService implements PaymentAPI {
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
-    TollRepository tollRepository;
+    private TollRepository tollRepository;
 
     @Autowired
-    VehicleTollRepository vehicleTollRepository;
+    private VehicleTollRepository vehicleTollRepository;
 
     @Autowired
-    PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private RoadSegmentRepository roadSegmentRepository;
 
     @Autowired
     private PayUAPI payU;
@@ -66,9 +68,20 @@ public class PaymentService implements PaymentAPI {
 
         toll.setVehicleTolls(vehicleTolls);
 
+        toll.setSegments(null);
         Toll finalToll = toll;
+
         vehicleTolls.forEach(vt -> vt.setToll(finalToll));
-        tollRepository.save(finalToll);
+        Toll savedToll = tollRepository.save(finalToll);
+
+        List<RoadSegment> roadSegmentsToDetach = roadSegmentRepository.findAllByTollId(savedToll.getId());
+        roadSegmentsToDetach.forEach(rs -> rs.setToll(null));
+        roadSegmentRepository.saveAll(roadSegmentsToDetach);
+        if (!tollDTO.getRoadSegments().isEmpty()) {
+            List<RoadSegment> roadSegmentsToUpdate = roadSegmentRepository.findAllById(tollDTO.getRoadSegments());
+            roadSegmentsToUpdate.forEach(rs -> rs.setToll(savedToll));
+            roadSegmentRepository.saveAll(roadSegmentsToUpdate);
+        }
     }
 
     @Override
